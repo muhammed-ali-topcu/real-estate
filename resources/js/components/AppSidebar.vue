@@ -5,13 +5,19 @@ import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
+import { wTrans } from 'laravel-vue-i18n';
 import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
+        title: wTrans('Dashboard'),
         href: '/dashboard',
+        icon: LayoutGrid,
+    },
+    {
+        title: wTrans('Users'),
+        href: route('admin.users'),
         icon: LayoutGrid,
     },
 ];
@@ -38,6 +44,7 @@ const footerNavItems: NavItem[] = [
                     <SidebarMenuButton size="lg" as-child>
                         <Link :href="route('dashboard')">
                             <AppLogo />
+                            <h3>{{ $t('app.name') }}</h3>
                         </Link>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
