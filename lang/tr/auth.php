@@ -4,17 +4,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Authentication Language Lines
+    | Kimlik Kontrol Metinleri
     |--------------------------------------------------------------------------
     |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
+    | Aşağıdaki metinler kimlik doğrulama (giriş) sırasında kullanıcılara
+    | gösterilebilecek mesajlardır. Bu metinleri uygulamanızın
+    | gereksinimlerine göre düzenlemekte özgürsünüz.
     |
     */
 
-    'failed' => 'tr auth failed',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-
+    'failed' => 'Verilen bilgiler kayıtlarımızla eşleşmiyor.',
+    'password' => 'Girilen şifre yanlış.',
+    'throttle' => 'Çok fazla giriş denemesi yapıldı. Lütfen :seconds saniye sonra yeniden deneyin.',
 ];
