@@ -3,16 +3,19 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\RolesEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
     use SoftDeletes;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -23,12 +26,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin',
         'phone',
         'phone_verified_at',
     ];
     protected $casts    = [
-        'is_admin'  => 'boolean',
         'is_active' => 'boolean',
 
 
@@ -59,12 +60,12 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->is_admin === true;
+        return $this->hasRole(RolesEnum::ADMIN);
     }
 
     public function isUser(): bool
     {
-        return $this->is_admin === false;
+        return $this->hasRole(RolesEnum::USER);
     }
 
 }

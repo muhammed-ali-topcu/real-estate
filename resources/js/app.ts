@@ -39,18 +39,6 @@ createInertiaApp({
                 }
             })
             .use(ZiggyVue)
-            // .use(i18nVue, {
-            //     resolve: lang => import(`../../lang/${lang}.json`),
-            // })
-            // .use(i18nVue, {
-            //     resolve: async  lang => {
-            //         const langs = import.meta.glob('../../../lang/*.json');
-            //         return await langs[`../../../lang/${lang}.json`]();
-            //     }
-            // })
-            //
-
-
             .mount(el);
     },
     progress: {

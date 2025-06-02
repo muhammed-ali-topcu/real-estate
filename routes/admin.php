@@ -7,5 +7,5 @@ use Inertia\Inertia;
 
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
-    Route::get('users',[UserController::class,'index'])->name('users');
+    Route::resource('users',UserController::class);
 });
