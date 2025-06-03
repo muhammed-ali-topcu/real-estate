@@ -17,7 +17,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: wTrans('Users'),
-        href: route('admin.users'),
+        href: route('admin.users.index'),
         icon: LayoutGrid,
     },
 ];
