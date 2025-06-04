@@ -1,28 +1,49 @@
-<script setup lang="ts">
+<script>
 import Pagination from '@/components/Pagination.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Link, router } from '@inertiajs/vue3';
 import { wTrans } from 'laravel-vue-i18n';
-import { ref, watch } from 'vue';
 
-const props = defineProps<{
-    users: Object;
-    filters: Object;
-}>();
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: wTrans('Users'),
-        href: route('admin.users.index'),
+export default {
+    components: {
+        Pagination,
+        AppLayout,
+        Link
     },
-];
 
-const search = ref();
-search.value = props.filters.search;
+    props: {
+        users: {
+            type: Object,
+            required: true
+        },
+        filters: {
+            type: Object,
+            required: true
+        }
+    },
 
-watch(search, (value) => {
-    router.get(route('admin.users.index'), { search: value }, { preserveState: true, replace: true });
-});
+    data() {
+        return {
+            search: this.filters.search || '',
+            breadcrumbs: [
+                {
+                    title: wTrans('Users'),
+                    href: this.route('admin.users.index'),
+                }
+            ]
+        };
+    },
+
+    watch: {
+        search(value) {
+            router.get(
+                this.route('admin.users.index'),
+                { search: value },
+                { preserveState: true, replace: true }
+            );
+        }
+    }
+};
 </script>
 
 <template>
