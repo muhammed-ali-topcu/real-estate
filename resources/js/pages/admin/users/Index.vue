@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import Pagination from '@/components/Pagination.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 import { wTrans } from 'laravel-vue-i18n';
+import { ref, watch } from 'vue';
 
-defineProps<{
+const props = defineProps<{
     users: Object;
+    filters: Object;
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -14,10 +16,24 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: route('admin.users.index'),
     },
 ];
+
+const search = ref();
+search.value = props.filters.search;
+
+watch(search, (value) => {
+    router.get(route('admin.users.index'), { search: value }, { preserveState: true, replace: true });
+});
 </script>
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
+        <div class="flex items-center justify-between">
+            <h1 class="text-3xl font-bold">{{ $t('Users') }}</h1>
+            <Link :href="route('admin.users.create')" class="btn-primary"> Create user</Link>
+        </div>
+        <div class="my-4 flex items-center justify-between">
+            <input type="text" :placeholder="$t('Search...')" class="rounded border p-2" v-model="search" />
+        </div>
         <table class="table-bordered table-striped table w-full">
             <thead>
                 <tr>
