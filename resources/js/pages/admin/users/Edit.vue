@@ -1,22 +1,39 @@
-<script setup lang="ts">
+<script>
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import InputError from '@/components/InputError.vue';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+export default {
+    components: {
+        AppLayout,
+        Head,
+        Button,
+        InputError,
+        Input,
+        Label,
+    },
+    props:{
+      user: Object
+    },
+    data() {
+        return {
+            form: useForm({
+                name: this.user.name,
+                email: this.user.email,
+                // Add other user fields as needed
+            }),
+        };
+    },
+    methods: {
+        submit() {
+            this.form.put(route('admin.users.update', this.user.id));
+        },
+    },
 
-const props = defineProps<{ user: any }>();
-
-const form = useForm({
-    name: props.user.name,
-    email: props.user.email,
-    // Add other user fields as needed
-});
-
-const submit = () => {
-    form.put(route('admin.users.update', props.user.id));
 };
+
 </script>
 
 <template>
@@ -55,23 +72,24 @@ const submit = () => {
                         <InputError :message="form.errors.email" />
                     </div>
 
-                    <div class="flex justify-end space-x-3 pt-4">
-                        <Button
-                            type="button"
-                            variant="outline"
-                            @click="$inertia.visit(route('admin.users.index'))"
-                            :disabled="form.processing"
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            type="submit"
-                            :disabled="form.processing"
-                        >
-                            <span v-if="form.processing">Saving...</span>
-                            <span v-else>Save Changes</span>
-                        </Button>
-                    </div>
+                        <div class="flex justify-end space-x-3 pt-4">
+
+                            <Button
+                                type="button"
+                                variant="outline"
+                                @click="$inertia.visit(route('admin.users.index'))"
+                                :disabled="form.processing"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="submit"
+                                :disabled="form.processing"
+                            >
+                                <span v-if="form.processing">Saving...</span>
+                                <span v-else>Save Changes</span>
+                            </Button>
+                        </div>
                 </form>
             </div>
         </div>
