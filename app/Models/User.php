@@ -27,11 +27,12 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'is_active',
         'phone_verified_at',
     ];
     protected $casts    = [
         'is_active' => 'boolean',
-            ];
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

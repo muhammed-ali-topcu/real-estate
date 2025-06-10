@@ -4,14 +4,20 @@ import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { Select } from '@/components/ui/select/index.js';
 
 export default {
     components: {
+        Select,
         AppLayout,
         Head,
         InputError,
         Input,
-        Label,
+        Label
+    },
+    props: {
+        roles: Array
+
     },
 
     data() {
@@ -21,16 +27,21 @@ export default {
                 email: '',
                 password: '',
                 password_confirmation: '',
-            }),
+                roles:[],
+            })
         };
     },
     methods: {
         submit() {
             this.form.post(route('admin.users.store'), {
-                preserveScroll: true,
+                preserveScroll: true
             });
-        },
+        }
     },
+    created() {
+        console.log(this.roles);
+    }
+
 };
 </script>
 
@@ -39,11 +50,11 @@ export default {
 
     <AppLayout>
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 gap-96">
-            <form @submit.prevent="submit" >
+            <form @submit.prevent="submit">
 
-                    <h1 class="text-xl font-semibold leading-tight tracking-tight text-gray-900 dark:text-white">
-                        {{ $t('Add user') }}
-                    </h1>
+                <h1 class="text-xl font-semibold leading-tight tracking-tight text-gray-900 dark:text-white">
+                    {{ $t('Add user') }}
+                </h1>
                 <div class="grid ">
                     <Label for="name">{{ $t('Name') }}</Label>
                     <Input id="name" class="mt-1 block w-full" v-model="form.name" required :placeholder="$t('Name')" />
@@ -56,10 +67,22 @@ export default {
                     <InputError class="" :message="form.errors.email" />
                 </div>
 
+                <div class="space-y-2">
+                    <Label for="roles">{{ $t('Role') }}</Label>
+                    <select id="roles" class="mt-1 block w-full" v-model="form.roles"  multiple>
+                        <option v-for="role in roles" :value="role">
+                            {{ $t(role) }}
+                        </option>
+                    </select>
+                    <InputError class="mt-2" :message="form.errors.roles" />
+                </div>
+
+
                 <div class="grid gap-4 mt-4">
                     <Label for="password">{{ $t('Password') }}</Label>
-                    <Input id="password" class="mt-1 block w-full" v-model="form.password" required :placeholder="$t('Password')" type="password" />
-                    <InputError  :message="form.errors.password" />
+                    <Input id="password" class="mt-1 block w-full" v-model="form.password" required
+                           :placeholder="$t('Password')" type="password" />
+                    <InputError :message="form.errors.password" />
                 </div>
 
                 <div class="grid gap-4 mt-4">

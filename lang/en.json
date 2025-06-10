@@ -1,4 +1,6 @@
 {
     "Dashboard": "Dashboard",
-    "Users": "Users"
+    "Users": "Users",
+    "user": "User",
+    "admin": "Admin"
 }

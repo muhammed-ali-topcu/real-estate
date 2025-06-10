@@ -8,18 +8,18 @@ export default {
     components: {
         Pagination,
         AppLayout,
-        Link
+        Link,
     },
 
     props: {
         users: {
             type: Object,
-            required: true
+            required: true,
         },
         filters: {
             type: Object,
-            required: true
-        }
+            required: true,
+        },
     },
 
     data() {
@@ -29,20 +29,16 @@ export default {
                 {
                     title: wTrans('Users'),
                     href: this.route('admin.users.index'),
-                }
-            ]
+                },
+            ],
         };
     },
 
     watch: {
         search(value) {
-            router.get(
-                this.route('admin.users.index'),
-                { search: value },
-                { preserveState: true, replace: true }
-            );
-        }
-    }
+            router.get(this.route('admin.users.index'), { search: value }, { preserveState: true, replace: true });
+        },
+    },
 };
 </script>
 
@@ -52,9 +48,10 @@ export default {
             <h1 class="text-3xl font-bold">{{ $t('Users') }}</h1>
             <Link :href="route('admin.users.create')" class="btn-primary"> Create user</Link>
         </div>
-        <div class="my-4 flex items-center justify-between">
+        <div class="my-4 grid grid-cols-3">
             <input type="text" :placeholder="$t('Search...')" class="rounded border p-2" v-model="search" />
         </div>
+
         <table class="table-bordered table-striped table w-full">
             <thead>
                 <tr>
@@ -62,6 +59,7 @@ export default {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Status</th>
+                    <th>{{ $t('Roles') }}</th>
                     <th>{{ $t('Created at') }}</th>
                     <th>Actions</th>
                 </tr>
@@ -72,6 +70,7 @@ export default {
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.status }}</td>
+                    <td>{{ user.roles }}</td>
                     <td>{{ user.created_at }}</td>
                     <td>
                         <Link :href="route('admin.users.edit', user.id)" class="m-2 rounded hover:bg-amber-100" as="button"> Edit </Link>
