@@ -5,20 +5,26 @@ import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { wTrans } from 'laravel-vue-i18n';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { wTrans,trans } from 'laravel-vue-i18n';
+import { BookOpen, Folder, LayoutGrid,Users } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
+import { usePage } from '@inertiajs/vue3'
+
+
+const page = usePage();
 
 const mainNavItems: NavItem[] = [
     {
-        title: wTrans('Dashboard'),
-        href: '/dashboard',
+        title: trans('Dashboard'),
+        href: route('dashboard'),
         icon: LayoutGrid,
+        visible: true
     },
     {
-        title: wTrans('Users'),
+        title: trans('Users'),
         href: route('admin.users.index'),
-        icon: LayoutGrid,
+        icon: Users,
+        visible: page.props.can.list_users,
     },
 ];
 
@@ -27,11 +33,13 @@ const footerNavItems: NavItem[] = [
         title: 'Github Repo',
         href: 'https://github.com/laravel/vue-starter-kit',
         icon: Folder,
+        visible: false,
     },
     {
         title: 'Documentation',
         href: 'https://laravel.com/docs/starter-kits#vue',
         icon: BookOpen,
+        visible:true,
     },
 ];
 </script>

@@ -71,6 +71,10 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "reset": [
+            "@php artisan config:clear --ansi",
+            "@php artisan migrate:fresh --seed --force --ansi"
         ]
     },
     "extra": {

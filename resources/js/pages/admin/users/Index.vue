@@ -73,9 +73,17 @@ export default {
                     <td>{{ user.roles }}</td>
                     <td>{{ user.created_at }}</td>
                     <td>
-                        <Link :href="route('admin.users.edit', user.id)" class="m-2 rounded hover:bg-amber-100" as="button"> Edit </Link>
+                        <Link
+                            v-if="$page.props.can.edit_users"
+                            :href="route('admin.users.edit', user.id)"
+                            class="m-2 rounded hover:bg-amber-100"
+                            as="button"
+                        >
+                            Edit
+                        </Link>
 
                         <Link
+                            v-if="$page.props.can.delete_users"
                             :href="route('admin.users.destroy', user.id)"
                             method="delete"
                             as="button"

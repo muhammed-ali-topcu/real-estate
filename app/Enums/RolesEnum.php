@@ -16,5 +16,13 @@ enum RolesEnum: string
 //        };
 //    }
 
+    /**
+     * Get all permissions as an array of strings.
+     */
+    public static function all(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
+
 
 }
