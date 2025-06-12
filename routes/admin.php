@@ -6,6 +6,12 @@ use Inertia\Inertia;
 
 
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified','role:'.\App\Enums\RolesEnum::ADMIN->value])->group(function () {
     Route::resource('users',UserController::class);
 });
+
+
+Route::middleware(['auth', 'verified','role:'.\App\Enums\RolesEnum::ADMIN->value])->group(function () {
+
+});
+Route::impersonate();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\PermissionsEnum;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -42,15 +43,14 @@ class HandleInertiaRequests extends Middleware
 
         return [
             ...parent::share($request),
-            'name'            => config('app.name'),
-            'quote'           => ['message' => trim($message), 'author' => trim($author)],
-            'auth'            => [
+            'name'  => config('app.name'),
+            'quote' => ['message' => trim($message), 'author' => trim($author)],
+            'auth'  => [
                 'user' => $request->user(),
-
             ],
-            'isImpersonating' => is_impersonating(),
-            'canImpersonate'  => $request->user()?->canImpersonate() && !is_impersonating(),
 
+            'isImpersonating' => is_impersonating(),
+            'can'             => $this->_permissions($request),
             'ziggy'       => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
@@ -64,4 +64,14 @@ class HandleInertiaRequests extends Middleware
             ],
         ];
     }
+
+    private function _permissions(Request $request): array
+    {
+        $permissions = [];
+        foreach (PermissionsEnum::cases() as $permissionsEnum) {
+            $permissions[$permissionsEnum->value] = $request->user()?->can($permissionsEnum);
+        }
+        return $permissions;
+    }
+
 }

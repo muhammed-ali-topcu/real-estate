@@ -69,10 +69,7 @@ class User extends Authenticatable
         return $this->hasRole(RolesEnum::USER);
     }
 
-    public function canImpersonate(): bool
-    {
-        return $this->isAdmin();
-    }
+
 
     public function canBeImpersonated(): bool
     {
