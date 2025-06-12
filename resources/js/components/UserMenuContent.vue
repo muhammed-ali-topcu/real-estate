@@ -30,6 +30,16 @@ defineProps<Props>();
                 Settings
             </Link>
         </DropdownMenuItem>
+
+
+
+        <DropdownMenuItem :as-child="true" v-if="$page.props.isImpersonating">
+            <Link class="block w-full" :href="route('impersonate.leave')" prefetch as="button">
+                <LogOut class="mr-2 h-4 w-4" />
+                {{$t('Leave impersonation')}}
+            </Link>
+        </DropdownMenuItem>
+
     </DropdownMenuGroup>
     <DropdownMenuSeparator />
     <DropdownMenuItem :as-child="true">
@@ -38,4 +48,6 @@ defineProps<Props>();
             Log out
         </Link>
     </DropdownMenuItem>
+
+
 </template>

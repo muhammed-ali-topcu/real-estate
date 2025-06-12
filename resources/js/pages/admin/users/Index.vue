@@ -73,7 +73,10 @@ export default {
                     <td>{{ user.roles }}</td>
                     <td>{{ user.created_at }}</td>
                     <td>
+
+                        <Link v-if="$page.props.canImpersonate" :href="route('impersonate', user.id)" class="m-2 rounded hover:bg-amber-100" as="button"> Impersonate </Link>
                         <Link :href="route('admin.users.edit', user.id)" class="m-2 rounded hover:bg-amber-100" as="button"> Edit </Link>
+
                         <Link
                             :href="route('admin.users.destroy', user.id)"
                             method="delete"
@@ -82,6 +85,7 @@ export default {
                         >
                             Delete
                         </Link>
+
                     </td>
                 </tr>
             </tbody>

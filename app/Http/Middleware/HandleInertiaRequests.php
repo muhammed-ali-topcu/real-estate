@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Lab404\Impersonate\Impersonate;
 use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -41,11 +42,15 @@ class HandleInertiaRequests extends Middleware
 
         return [
             ...parent::share($request),
-            'name'        => config('app.name'),
-            'quote'       => ['message' => trim($message), 'author' => trim($author)],
-            'auth'        => [
+            'name'            => config('app.name'),
+            'quote'           => ['message' => trim($message), 'author' => trim($author)],
+            'auth'            => [
                 'user' => $request->user(),
+
             ],
+            'isImpersonating' => session()->has(config('laravel-impersonate.session_key')),
+            'canImpersonate'  => $request->user()?->canImpersonate() && !session()->has(config('laravel-impersonate.session_key')),
+
             'ziggy'       => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
