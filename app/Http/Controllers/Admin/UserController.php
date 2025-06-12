@@ -31,6 +31,7 @@ class UserController extends Controller
                 'email'      => $user->email,
                 'status'     => $user->is_active ? __('Active') : __('Inactive'),
                 'roles'      => $user->roles->pluck('name')->implode(', '),
+                'can_be_impersonated' => $user->canBeImpersonated(),
                 'created_at' => $user->created_at->format('Y-m-d H:i:s'),
             ]);
 

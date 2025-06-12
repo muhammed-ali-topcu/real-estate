@@ -8,18 +8,18 @@ export default {
     components: {
         Pagination,
         AppLayout,
-        Link,
+        Link
     },
 
     props: {
         users: {
             type: Object,
-            required: true,
+            required: true
         },
         filters: {
             type: Object,
-            required: true,
-        },
+            required: true
+        }
     },
 
     data() {
@@ -28,17 +28,17 @@ export default {
             breadcrumbs: [
                 {
                     title: wTrans('Users'),
-                    href: this.route('admin.users.index'),
-                },
-            ],
+                    href: this.route('admin.users.index')
+                }
+            ]
         };
     },
 
     watch: {
         search(value) {
             router.get(this.route('admin.users.index'), { search: value }, { preserveState: true, replace: true });
-        },
-    },
+        }
+    }
 };
 </script>
 
@@ -54,40 +54,46 @@ export default {
 
         <table class="table-bordered table-striped table w-full">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Status</th>
-                    <th>{{ $t('Roles') }}</th>
-                    <th>{{ $t('Created at') }}</th>
-                    <th>Actions</th>
-                </tr>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>{{ $t('Roles') }}</th>
+                <th>{{ $t('Created at') }}</th>
+                <th>Actions</th>
+            </tr>
             </thead>
             <tbody>
-                <tr v-for="user in users.data" :key="user.id">
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.status }}</td>
-                    <td>{{ user.roles }}</td>
-                    <td>{{ user.created_at }}</td>
-                    <td>
+            <tr v-for="user in users.data" :key="user.id">
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.status }}</td>
+                <td>{{ user.roles }}</td>
+                <td>{{ user.created_at }}</td>
+                <td>
 
-                        <Link v-if="$page.props.canImpersonate" :href="route('impersonate', user.id)" class="m-2 rounded hover:bg-amber-100" as="button"> Impersonate </Link>
-                        <Link :href="route('admin.users.edit', user.id)" class="m-2 rounded hover:bg-amber-100" as="button"> Edit </Link>
 
-                        <Link
-                            :href="route('admin.users.destroy', user.id)"
-                            method="delete"
-                            as="button"
-                            class="rounded bg-red-500 p-2 font-bold text-white hover:bg-red-700"
-                        >
-                            Delete
-                        </Link>
+                    <Link :href="route('admin.users.edit', user.id)" class="m-2 rounded hover:bg-amber-100" as="button">
+                        Edit
+                    </Link>
 
-                    </td>
-                </tr>
+                    <Link
+                        :href="route('admin.users.destroy', user.id)"
+                        method="delete"
+                        as="button"
+                        class="rounded bg-red-500 p-2 font-bold text-white hover:bg-red-700"
+                    >
+                        Delete
+                    </Link>
+                    <Link v-if="user.can_be_impersonated && $page.props.canImpersonate"
+                          :href="route('impersonate', user.id)" class="m-2 rounded hover:bg-amber-100" as="button">
+                        Impersonate
+                    </Link>
+
+                </td>
+            </tr>
             </tbody>
         </table>
         <Pagination :links="users.links" />

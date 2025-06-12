@@ -48,8 +48,8 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
 
             ],
-            'isImpersonating' => session()->has(config('laravel-impersonate.session_key')),
-            'canImpersonate'  => $request->user()?->canImpersonate() && !session()->has(config('laravel-impersonate.session_key')),
+            'isImpersonating' => is_impersonating(),
+            'canImpersonate'  => $request->user()?->canImpersonate() && !is_impersonating(),
 
             'ziggy'       => [
                 ...(new Ziggy)->toArray(),

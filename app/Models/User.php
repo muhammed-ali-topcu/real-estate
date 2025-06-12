@@ -76,6 +76,7 @@ class User extends Authenticatable
 
     public function canBeImpersonated(): bool
     {
+        return true;
         return ! $this->isAdmin();
     }
 
