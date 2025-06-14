@@ -12,6 +12,12 @@ enum PermissionsEnum : string
     case IMPERSONATE_USERS = 'impersonate_users';
 
 
+    case LIST_PROPERTIES = 'list_properties';
+    case CREATE_PROPERTIES = 'create_properties';
+    case EDIT_PROPERTIES = 'edit_properties';
+    case DELETE_PROPERTIES = 'delete_properties';
+
+
 
     /**
      * Get all permissions as an array of strings.

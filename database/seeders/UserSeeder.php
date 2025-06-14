@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         ]);
         $admin->assignRole(RolesEnum::ADMIN);
 
-        $users = User::factory(1000)->create();
+        $users = User::factory(50)->create();
         foreach ($users as $user) {
             $user->assignRole(RolesEnum::USER);
         }

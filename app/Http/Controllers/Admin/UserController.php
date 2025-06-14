@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
+use Inertia\Inertia;
 use App\Enums\RolesEnum;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Inertia\Inertia;
-use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
