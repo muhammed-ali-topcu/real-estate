@@ -26,8 +26,8 @@ export default {
                 status: null,
                 min_price: '',
                 max_price: '',
-                min_bedrooms: '',
-                max_bedrooms: '',
+                min_rooms: '',
+                max_rooms: '',
             }),
         },
         propertyTypes: {
@@ -70,8 +70,8 @@ export default {
             this.filters.status = null;
             this.filters.min_price = '';
             this.filters.max_price = '';
-            this.filters.min_bedrooms = '';
-            this.filters.max_bedrooms = '';
+            this.filters.min_rooms = '';
+            this.filters.max_rooms = '';
             this.applyFilters();
         },
     },
@@ -152,7 +152,7 @@ export default {
                     <th>{{ $t('Property Type') }}</th>
                     <th>{{ $t('Listing Type') }}</th>
                     <th>{{ $t('Price') }}</th>
-                    <th>{{ $t('Bedrooms') }}</th>
+                    <th>{{ $t('rooms') }}</th>
                     <th>{{ $t('Status') }}</th>
                     <th>{{ $t('Created at') }}</th>
                     <th>{{ $t('Actions') }}</th>
@@ -165,7 +165,7 @@ export default {
                     <td>{{ property.property_type }}</td>
                     <td>{{ property.listing_type }}</td>
                     <td>{{ property.price }}</td>
-                    <td>{{ property.bedrooms }}</td>
+                    <td>{{ property.rooms }}</td>
                     <td>{{ property.status }}</td>
                     <td>{{ property.created_at }}</td>
                     <td>

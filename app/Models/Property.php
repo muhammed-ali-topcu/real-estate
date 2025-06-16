@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $listing_type
  * @property string $price
  * @property string $currency
- * @property string|null $bedrooms
+ * @property string|null $rooms
  * @property int|null $bathrooms
  * @property string|null $area
  * @property string $address
@@ -51,7 +51,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereApprovedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereArea($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereBathrooms($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereBedrooms($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whererooms($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCity($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCountry($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereCreatedAt($value)
@@ -89,7 +89,7 @@ class Property extends Model
         'listing_type',
         'price',
         'currency',
-        'bedrooms',
+        'rooms',
         'bathrooms',
         'area',
         'address',

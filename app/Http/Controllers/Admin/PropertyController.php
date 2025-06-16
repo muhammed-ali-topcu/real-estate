@@ -2,9 +2,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\PropertyListingTypes;
+use App\Enums\PropertyRooms;
 use App\Enums\PropertyStatuses;
 use App\Enums\PropertyTypes;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PropertyCreateRequest;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -33,12 +35,11 @@ class PropertyController extends Controller
             $query->where('status', request('status'));
         });
         $query->when(request('min_price'), function ($query) {
-            $query->where('price', '>=', (float)request('min_price'));
+            $query->where('price', '>=', (float) request('min_price'));
         });
         $query->when(request('max_price'), function ($query) {
-            $query->where('price', '<=', (float)request('max_price'));
+            $query->where('price', '<=', (float) request('max_price'));
         });
-       
 
         $properties = $query->latest()
             ->paginate(10)
@@ -46,12 +47,12 @@ class PropertyController extends Controller
             ->through(
                 fn($property) => [
                     'id'            => $property->id,
-                    'title'=>Str::limit($property->title, 20, '...'),
+                    'title'         => Str::limit($property->title, 20, '...'),
                     'price'         => $property->price,
                     'status'        => $property->status,
                     'property_type' => $property->property_type,
                     'listing_type'  => $property->listing_type,
-                    'bedrooms'      => $property->bedrooms,
+                    'rooms'         => $property->rooms,
                     'admin_notes'   => $property->admin_notes,
                     'approved_at'   => $property->approved_at,
                     'approved_by'   => $property->approved_by,
@@ -70,6 +71,49 @@ class PropertyController extends Controller
 
     public function create()
     {
-        return inertia('admin/properties/Create');
+        return inertia('admin/properties/Create', [
+            'propertyTypes' => PropertyTypes::all(),
+            'listingTypes'  => PropertyListingTypes::all(),
+            'rooms'         => PropertyRooms::all(),
+            'statuses'      => PropertyStatuses::all(),
+        ]);
     }
+    public function store(PropertyCreateRequest $request)
+    {
+        $property = new Property();
+        $property->fill($request->validated());
+        $property->user_id = auth()->user()->id;
+        $property->status  = PropertyStatuses::PENDING;
+        $property->save();
+        return redirect()->route('admin.properties.index')->with('success', __('Property created successfully'));
+    }
+    public function show(Property $property)
+    {
+        return inertia('admin/properties/Show', [
+            'property' => $property,
+        ]);
+    }
+    public function edit(Property $property)
+    {
+        return inertia('admin/properties/Edit', [
+            'property'      => $property,
+            'propertyTypes' => PropertyTypes::all(),
+            'listingTypes'  => PropertyListingTypes::all(),
+            'rooms'         => PropertyRooms::all(),
+            'statuses'      => PropertyStatuses::all(),
+        ]);
+    }
+    public function update(PropertyUpdateRequest $request, Property $property)
+    {
+        $property->fill($request->validated());
+        $property->save();
+        return redirect()->route('admin.properties.index')->with('success', __('Property updated successfully'));
+    }
+
+    public function destroy(Property $property)
+    {
+        $property->delete();
+        return redirect()->route('admin.properties.index')->with('success', __('Property deleted successfully'));
+    }
+
 }

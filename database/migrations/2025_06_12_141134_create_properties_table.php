@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->enum('listing_type', ['sale', 'rent']);
             $table->decimal('price', 15, 2);
             $table->string('currency', 3)->default('USD');
-            $table->string('bedrooms')->nullable()->comment('1+0, 2+0, 3+0,1+1, 2+1, 3+1, 4+1 etc');
+            $table->string('rooms')->nullable()->comment('1+0, 2+0, 3+0,1+1, 2+1, 3+1, 4+1 etc');
             $table->integer('bathrooms')->nullable();
             $table->decimal('area', 10, 2)->nullable()->comment('In square meters');
             $table->text('address');

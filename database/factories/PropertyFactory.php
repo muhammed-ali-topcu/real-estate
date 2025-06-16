@@ -30,7 +30,7 @@ class PropertyFactory extends Factory
             'property_type' => $this->faker->randomElement($propertyTypes),
             'listing_type' => $this->faker->randomElement($listingTypes),
             'price' => $this->faker->numberBetween(50000, 5000000),
-            'bedrooms' => $this->faker->numberBetween(1, 10),
+            'rooms' => $this->faker->numberBetween(1, 10),
             'bathrooms' => $this->faker->numberBetween(1, 5),
             'area' => $this->faker->numberBetween(50, 1000),
             'address' => $this->faker->address,
