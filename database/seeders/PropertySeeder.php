@@ -12,13 +12,13 @@ class PropertySeeder extends Seeder
      */
     public function run(): void
     {
-        $property = \App\Models\Property::factory()->create();
+        $property = \App\Models\Property::factory(100)->create();
 
-        $featured = \App\Models\Property::factory()->featured()->create();
+        $featured = \App\Models\Property::factory(10)->featured()->create();
 
-        $approved = \App\Models\Property::factory()->approved()->create();
+        $approved = \App\Models\Property::factory(10)->approved()->create();
 
-        $pending = \App\Models\Property::factory()->count(5)->pending()->create();
+        $pending = \App\Models\Property::factory(10)->pending()->create();
 
     }
 }

@@ -13,7 +13,7 @@ use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -56,6 +56,10 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTrashed()
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Property> $approvedProperties
+ * @property-read int|null $approved_properties_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Property> $properties
+ * @property-read int|null $properties_count
  * @mixin \Eloquent
  */
 class User extends Authenticatable

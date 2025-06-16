@@ -6,7 +6,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { wTrans,trans } from 'laravel-vue-i18n';
-import { BookOpen, Folder, LayoutGrid,Users } from 'lucide-vue-next';
+import { BookOpen, Folder, Home, LayoutGrid,Users } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 import { usePage } from '@inertiajs/vue3'
 
@@ -26,6 +26,14 @@ const mainNavItems: NavItem[] = [
         icon: Users,
         visible: page.props.can.list_users,
     },
+    {
+        title: trans('Properties'),
+        href: route('admin.properties.index'),
+        icon: Home,
+        visible: page.props.can.list_properties,
+    },
+
+
 ];
 
 const footerNavItems: NavItem[] = [

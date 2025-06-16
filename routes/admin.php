@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\Admin\PropertyController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Enums\PermissionsEnum;
