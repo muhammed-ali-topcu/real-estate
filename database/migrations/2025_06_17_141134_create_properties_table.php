@@ -23,9 +23,9 @@ return new class extends Migration {
             $table->integer('bathrooms')->nullable();
             $table->decimal('area', 10, 2)->nullable()->comment('In square meters');
             $table->text('address');
-            $table->string('city', 100);
-            $table->string('state', 100);
-            $table->string('country', 100);
+            $table->foreignIdFor(\App\Models\City::class)->nullable()->constrained()->nullable()->nullOnDelete();
+            $table->foreignIdFor(\App\Models\Country::class)->nullable()->constrained()->nullable()->nullOnDelete();
+            $table->foreignIdFor(\App\Models\District::class)->nullable()->constrained()->nullable()->nullOnDelete();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected', 'sold', 'rented'])->default('pending');
@@ -42,9 +42,7 @@ return new class extends Migration {
             $table->index(['property_type']);
             $table->index(['listing_type']);
             $table->index(['status']);
-            $table->index(['city']);
-            $table->index(['price']);
-            $table->index(['latitude', 'longitude']);
+            
 
         });
     }

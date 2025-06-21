@@ -93,9 +93,9 @@ class Property extends Model
         'bathrooms',
         'area',
         'address',
-        'city',
-        'state',
-        'country',
+        'city_id',
+        'district_id',
+        'country_id',
         'latitude',
         'longitude',
         'status',
@@ -121,6 +121,18 @@ class Property extends Model
     public function approvedBy(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
+    }
+    public function district(): BelongsTo
+    {
+        return $this->belongsTo(District::class);
+    }
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
     }
 
 
