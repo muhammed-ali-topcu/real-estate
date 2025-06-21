@@ -136,23 +136,26 @@ export default {
                         <InputError class="mt-2" :message="form.errors.price" />
                     </div>
 
-
                     <div class="my-4">
                         <Label for="area">{{ $t('Area in square meters') }}</Label>
                         <Input id="area" class="mt-1 block w-full" v-model="form.area" required
                             :placeholder="$t('Area in square meters')" type="number" />
                         <InputError class="mt-2" :message="form.errors.area" />
                     </div>
-
-
                 </div>
-
 
                 <div class="grid my-4">
                     <Label for="description">{{ $t('Description') }}</Label>
-                    <textarea class="mt-2 block w-full rounded border " id="description" v-model="form.description"
+                    <textarea class="mt-2 block w-full rounded p-2 border " id="description" v-model="form.description"
                         :placeholder="$t('Description')" rows="5"></textarea>
                     <InputError class="" :message="form.errors.description" />
+                </div>
+
+                <div class="grid my-4">
+                    <Label for="address">{{ $t('Address') }}</Label>
+                    <textarea class="mt-2 block w-full  p-2 rounded border " id="address" v-model="form.address"
+                        :placeholder="$t('Address')" rows="5"></textarea>
+                    <InputError class="" :message="form.errors.address" />
                 </div>
 
                 <button type="submit" class="m-2 rounded bg-blue-400 px-2" :disabled="form.processing">{{ $t('Save')
