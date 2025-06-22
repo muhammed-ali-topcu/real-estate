@@ -5,6 +5,7 @@ import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Select } from '@/components/ui/select/index.js';
+import Address from '@/pages/admin/properties/Addres.vue';
 
 export default {
     components: {
@@ -14,6 +15,7 @@ export default {
         InputError,
         Input,
         Label,
+        Address,
     },
     props: {
         propertyTypes: {
@@ -49,6 +51,7 @@ export default {
                 approved_by: '',
                 area: '',
                 address: '',
+                country_id: null
             })
         };
     },
@@ -144,12 +147,12 @@ export default {
                     </div>
                 </div>
 
-                <div class="grid my-4">
-                    <Label for="description">{{ $t('Description') }}</Label>
-                    <textarea class="mt-2 block w-full rounded p-2 border " id="description" v-model="form.description"
-                        :placeholder="$t('Description')" rows="5"></textarea>
-                    <InputError class="" :message="form.errors.description" />
+                <div class="my-4">
+                    <Address @update:country-id="value => form.country_id = value"
+                        @update:city-id="value => form.city_id = value"
+                        @update:district-id="value => form.district_id = value" />
                 </div>
+
 
                 <div class="grid my-4">
                     <Label for="address">{{ $t('Address') }}</Label>
@@ -158,8 +161,15 @@ export default {
                     <InputError class="" :message="form.errors.address" />
                 </div>
 
+
+                <div class="grid my-4">
+                    <Label for="description">{{ $t('Description') }}</Label>
+                    <textarea class="mt-2 block w-full rounded p-2 border " id="description" v-model="form.description"
+                        :placeholder="$t('Description')" rows="5"></textarea>
+                    <InputError class="" :message="form.errors.description" />
+                </div>
                 <button type="submit" class="m-2 rounded bg-blue-400 px-2" :disabled="form.processing">{{ $t('Save')
-                    }}</button>
+                }}</button>
             </form>
         </div>
     </AppLayout>

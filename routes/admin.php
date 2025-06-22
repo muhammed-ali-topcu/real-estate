@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\PropertyController;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use App\Enums\PermissionsEnum;
-
-
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Admin\PropertyController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CityController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:' . \App\Enums\RolesEnum::ADMIN->value])->group(function () {
 
@@ -25,10 +24,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:' 
     Route::get('properties/{property}/edit', [PropertyController::class, 'edit'])->name('properties.edit')->can(PermissionsEnum::EDIT_PROPERTIES->value);
     Route::put('properties/{property}', [PropertyController::class, 'update'])->name('properties.update')->can(PermissionsEnum::EDIT_PROPERTIES->value);
     Route::delete('properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy')->can(PermissionsEnum::DELETE_PROPERTIES->value);
+
+    //address
+    Route::get('address', [AddressController::class, 'index'])->name('address.index');  
+    Route::get('address/countries', [AddressController::class, 'getCountries'])->name('address.countries');
+    Route::get('address/cities/{country}', [AddressController::class, 'getCities'])->name('address.cities');
+    Route::get('address/districts/{city}', [AddressController::class, 'getDistricts'])->name('address.districts');
 });
-
-
-
 
 Route::middleware(['auth', 'verified', 'role:' . \App\Enums\RolesEnum::ADMIN->value])->group(function () {
 

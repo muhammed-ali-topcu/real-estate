@@ -7,6 +7,7 @@ use App\Enums\PropertyStatuses;
 use App\Enums\PropertyTypes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PropertyCreateRequest;
+use App\Models\Country;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -71,11 +72,20 @@ class PropertyController extends Controller
 
     public function create()
     {
+        $countries = Country::all()->transform(function ($country) {
+            return [
+                'id'   => $country->id,
+                'name' => $country->name,
+            ];
+        });
+        
+
         return inertia('admin/properties/Create', [
             'propertyTypes' => PropertyTypes::all(),
             'listingTypes'  => PropertyListingTypes::all(),
             'rooms'         => PropertyRooms::all(),
             'statuses'      => PropertyStatuses::all(),
+            'countries'     => $countries,
         ]);
     }
     public function store(PropertyCreateRequest $request)
