@@ -9,13 +9,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Country extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
     ];
+
     public function cities(): HasMany
     {
         return $this->hasMany(City::class);
     }
+
     public function properties(): HasMany
     {
         return $this->hasMany(Property::class);

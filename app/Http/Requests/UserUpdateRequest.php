@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\RequiredIf;
 
 class UserUpdateRequest extends FormRequest
 {
@@ -24,14 +23,14 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'            => ['required', 'string', 'max:255'],
-            'email'           => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->route('user')->id)],
-            'is_active'       => ['required', 'boolean'],
-            'roles'           => ['required', 'array'],
-            'roles.*'         => ['required', Rule::exists('roles', 'name')],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->route('user')->id)],
+            'is_active' => ['required', 'boolean'],
+            'roles' => ['required', 'array'],
+            'roles.*' => ['required', Rule::exists('roles', 'name')],
             'change_password' => ['nullable', 'boolean'],
-            'password'        => ['nullable', 'string', 'min:8', 'confirmed',
-                                  Rule::requiredIf($this->boolean('change_password')),
+            'password' => ['nullable', 'string', 'min:8', 'confirmed',
+                Rule::requiredIf($this->boolean('change_password')),
             ],
         ];
     }

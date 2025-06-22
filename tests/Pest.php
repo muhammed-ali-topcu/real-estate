@@ -3,6 +3,7 @@
 use App\Enums\RolesEnum;
 use App\Models\User;
 use Database\Seeders\RolesSeeder;
+
 use function Pest\Laravel\seed;
 
 /*
@@ -51,10 +52,11 @@ function something()
     // ..
 }
 
-
-function setubAdmin() {
+function setubAdmin()
+{
     seed(RolesSeeder::class);
     $admin = User::factory()->create();
     $admin->assignRole(RolesEnum::ADMIN->value);
+
     return test()->actingAs($admin);
 }

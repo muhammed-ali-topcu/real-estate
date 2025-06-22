@@ -18,7 +18,7 @@ class CityFactory extends Factory
     {
         return [
             'name' => $this->faker->city,
-            'country_id' => \App\Models\Country::factory(), 
+            'country_id' => \App\Models\Country::factory(),
         ];
     }
 }

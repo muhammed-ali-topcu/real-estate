@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -15,7 +16,7 @@ return new class extends Migration {
             $table->foreignIdFor(\App\Models\User::class)->nullable()->constrained()->onDelete('cascade');
             $table->string('title');
             $table->longText('description');
-            $table->enum('property_type', ['house', 'apartment', 'shop', 'office', 'land',]);
+            $table->enum('property_type', ['house', 'apartment', 'shop', 'office', 'land']);
             $table->enum('listing_type', ['sale', 'rent']);
             $table->decimal('price', 15, 2);
             $table->string('currency', 3)->default('USD');
@@ -42,7 +43,6 @@ return new class extends Migration {
             $table->index(['property_type']);
             $table->index(['listing_type']);
             $table->index(['status']);
-            
 
         });
     }

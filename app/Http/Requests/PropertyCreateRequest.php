@@ -27,18 +27,18 @@ class PropertyCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'         => 'required|string|max:255',
-            'description'   => 'required|string',
-            'address'       => 'required|string',
-            'property_type' => 'required|string|in:' . implode(',', PropertyTypes::all()),
-            'listing_type'  => 'required|string|in:' . implode(',', PropertyListingTypes::all()),
-            'price'         => 'required|numeric|gt:0',
-            'rooms'         => 'required|string|in:' . implode(',', PropertyRooms::all()),
-            'area'          => 'required|numeric|gt:0',
-            'status'        => 'required|string|in:' . implode(',', PropertyStatuses::all()),
-            'country_id'    => ['required', Rule::exists('countries', 'id')],
-            'city_id'       => ['required', Rule::exists('cities', 'id')->where('country_id', $this->country_id)],
-            'district_id'   => ['required', Rule::exists('districts', 'id')->where('city_id', $this->city_id)],
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'address' => 'required|string',
+            'property_type' => 'required|string|in:'.implode(',', PropertyTypes::all()),
+            'listing_type' => 'required|string|in:'.implode(',', PropertyListingTypes::all()),
+            'price' => 'required|numeric|gt:0',
+            'rooms' => 'required|string|in:'.implode(',', PropertyRooms::all()),
+            'area' => 'required|numeric|gt:0',
+            'status' => 'required|string|in:'.implode(',', PropertyStatuses::all()),
+            'country_id' => ['required', Rule::exists('countries', 'id')],
+            'city_id' => ['required', Rule::exists('cities', 'id')->where('country_id', $this->country_id)],
+            'district_id' => ['required', Rule::exists('districts', 'id')->where('city_id', $this->city_id)],
         ];
     }
 }

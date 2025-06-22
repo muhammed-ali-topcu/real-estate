@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\RolesEnum;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -15,10 +14,10 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $admin = User::updateOrCreate([
-            'name'              => 'Admin',
-            'email'             => 'admin@example.com',
-            'password'          => 'password',
-            'is_active'         => true,
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'password' => 'password',
+            'is_active' => true,
             'email_verified_at' => now(),
         ]);
         $admin->assignRole(RolesEnum::ADMIN);

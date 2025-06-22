@@ -9,17 +9,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class City extends Model
 {
-
     use HasFactory;
 
     protected $fillable = [
         'name',
         'country_id',
     ];
+
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
     }
+
     public function districts(): HasMany
     {
         return $this->hasMany(District::class);
@@ -28,5 +29,5 @@ class City extends Model
     public function properties(): HasMany
     {
         return $this->hasMany(Property::class);
-    }   
+    }
 }

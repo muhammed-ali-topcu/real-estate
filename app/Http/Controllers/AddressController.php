@@ -8,22 +8,23 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
+
 class AddressController extends Controller
 {
-
     public function index(): InertiaResponse
     {
-        return Inertia::render("admin/properties/Addres");
+        return Inertia::render('admin/properties/Addres');
     }
 
     public function getCountries(): JsonResponse
     {
         $countries = Country::all()->transform(function ($country) {
             return [
-                'id'   => $country->id,
+                'id' => $country->id,
                 'name' => $country->name,
             ];
         });
+
         return response()->json([
             'countries' => $countries,
         ]);
@@ -33,7 +34,7 @@ class AddressController extends Controller
     {
         $cities = $country->cities()->get()->transform(function ($city) {
             return [
-                'id'   => $city->id,
+                'id' => $city->id,
                 'name' => $city->name,
             ];
         });
@@ -47,7 +48,7 @@ class AddressController extends Controller
     {
         $districts = $city->districts()->get()->transform(function ($district) {
             return [
-                'id'   => $district->id,
+                'id' => $district->id,
                 'name' => $district->name,
             ];
         });
@@ -56,5 +57,4 @@ class AddressController extends Controller
             'districts' => $districts,
         ]);
     }
-
 }

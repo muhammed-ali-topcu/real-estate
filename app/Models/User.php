@@ -13,8 +13,6 @@ use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -33,6 +31,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -56,19 +55,22 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTrashed()
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Property> $approvedProperties
  * @property-read int|null $approved_properties_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Property> $properties
  * @property-read int|null $properties_count
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-    use SoftDeletes;
+
     use HasRoles;
     use Impersonate;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -83,7 +85,8 @@ class User extends Authenticatable
         'is_active',
         'phone_verified_at',
     ];
-    protected $casts    = [
+
+    protected $casts = [
         'is_active' => 'boolean',
     ];
 
@@ -106,7 +109,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password'          => 'hashed',
+            'password' => 'hashed',
         ];
     }
 
@@ -120,11 +123,11 @@ class User extends Authenticatable
         return $this->hasRole(RolesEnum::USER);
     }
 
-
     public function canBeImpersonated(): bool
     {
         return true;
-        return !$this->isAdmin();
+
+        return ! $this->isAdmin();
     }
 
     public function properties(): HasMany
@@ -136,5 +139,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Property::class)->where('approved_by', $this->id);
     }
-
 }

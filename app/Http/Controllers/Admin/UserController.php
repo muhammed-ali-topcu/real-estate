@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-use Inertia\Inertia;
 use App\Enums\RolesEnum;
-use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -25,18 +24,18 @@ class UserController extends Controller
             ->latest()
             ->paginate(10)
             ->withQueryString()
-            ->through(fn($user) => [
-                'id'         => $user->id,
-                'name'       => $user->name,
-                'email'      => $user->email,
-                'status'     => $user->is_active ? __('Active') : __('Inactive'),
-                'roles'      => $user->roles->pluck('name')->implode(', '),
+            ->through(fn ($user) => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'status' => $user->is_active ? __('Active') : __('Inactive'),
+                'roles' => $user->roles->pluck('name')->implode(', '),
                 'can_be_impersonated' => $user->canBeImpersonated(),
                 'created_at' => $user->created_at->format('Y-m-d H:i:s'),
             ]);
 
         return Inertia::render('admin/users/Index', [
-            'users'   => $users,
+            'users' => $users,
             'filters' => request()->only(['search']),
         ]);
     }
@@ -44,17 +43,19 @@ class UserController extends Controller
     public function create()
     {
         $roles = RolesEnum::cases();
+
         return Inertia::render('admin/users/Create', compact('roles'));
     }
 
     public function store(UserCreateRequest $request)
     {
         $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
+            'name' => $request->name,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
         $user->syncRoles($request->roles);
+
         return redirect()->route('admin.users.index')->with('success', __('User created successfully'));
     }
 
@@ -65,12 +66,12 @@ class UserController extends Controller
 
         return Inertia::render('admin/users/Edit', [
             'roles' => $roles,
-            'user'  => [
-                'id'        => $user->id,
-                'name'      => $user->name,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
                 'is_active' => $user->is_active,
-                'email'     => $user->email,
-                'roles'     => $user->roles->pluck('name')->toArray(),
+                'email' => $user->email,
+                'roles' => $user->roles->pluck('name')->toArray(),
             ],
         ]);
     }
@@ -85,14 +86,14 @@ class UserController extends Controller
         }
         $user->save();
         $user->syncRoles($request->roles);
+
         return redirect()->back()->with('success', __('User updated successfully'));
     }
 
     public function destroy(User $user)
     {
         $user->delete();
+
         return redirect()->back()->with('success', __('User deleted successfully'));
     }
-
-
 }

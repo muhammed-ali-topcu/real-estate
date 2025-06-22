@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PropertySeeder extends Seeder
@@ -12,7 +11,7 @@ class PropertySeeder extends Seeder
      */
     public function run(): void
     {
-        
+
         $property = \App\Models\Property::factory(100)->create();
 
         $featured = \App\Models\Property::factory(10)->featured()->create();

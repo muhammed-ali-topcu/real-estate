@@ -20,6 +20,6 @@ class DistrictFactory extends Factory
             'name' => $this->faker->city,
             'city_id' => \App\Models\City::factory(),
         ];
-        
+
     }
 }

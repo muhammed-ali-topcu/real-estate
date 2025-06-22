@@ -14,6 +14,7 @@ class UserCreateRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+
         return auth()->can(PermissionsEnum::CREATE_USERS);
     }
 
@@ -28,7 +29,7 @@ class UserCreateRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'roles'   => ['required', 'array'],
+            'roles' => ['required', 'array'],
             'roles.*' => ['required', Rule::exists('roles', 'name')],
         ];
     }

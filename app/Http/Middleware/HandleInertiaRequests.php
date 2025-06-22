@@ -6,7 +6,6 @@ use App\Enums\PermissionsEnum;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-use Lab404\Impersonate\Impersonate;
 use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -43,24 +42,24 @@ class HandleInertiaRequests extends Middleware
 
         return [
             ...parent::share($request),
-            'name'  => config('app.name'),
+            'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
-            'auth'  => [
+            'auth' => [
                 'user' => $request->user(),
             ],
 
             'isImpersonating' => is_impersonating(),
-            'can'             => $this->_permissions($request),
-            'ziggy'       => [
+            'can' => $this->_permissions($request),
+            'ziggy' => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
-            'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-            'flash'       => [
-                'message' => fn() => $request->session()->get('message'),
-                'status'  => fn() => $request->session()->get('status'),
-                'success' => fn() => $request->session()->get('success'),
-                'error'   => fn() => $request->session()->get('error'),
+            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'flash' => [
+                'message' => fn () => $request->session()->get('message'),
+                'status' => fn () => $request->session()->get('status'),
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
             ],
         ];
     }
@@ -71,7 +70,7 @@ class HandleInertiaRequests extends Middleware
         foreach (PermissionsEnum::cases() as $permissionsEnum) {
             $permissions[$permissionsEnum->value] = $request->user()?->can($permissionsEnum);
         }
+
         return $permissions;
     }
-
 }

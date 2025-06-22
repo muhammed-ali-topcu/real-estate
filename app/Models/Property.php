@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * 
- *
  * @property int $id
  * @property int|null $user_id
  * @property string $title
@@ -39,6 +37,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User|null $approvedBy
  * @property-read \App\Models\User|null $user
+ *
  * @method static \Database\Factories\PropertyFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property newQuery()
@@ -73,14 +72,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property whereYearBuilt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Property withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Property extends Model
 {
     /** @use HasFactory<\Database\Factories\PropertyFactory> */
     use HasFactory;
-    use SoftDeletes;
 
+    use SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -100,12 +100,12 @@ class Property extends Model
         'longitude',
         'status',
         'featured',
-        'year_built',];
+        'year_built', ];
 
     protected $casts = [
 
-
     ];
+
     protected $dates = [
         'approved_at',
         'created_at',
@@ -122,18 +122,19 @@ class Property extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
     }
+
     public function district(): BelongsTo
     {
         return $this->belongsTo(District::class);
     }
+
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
     }
-
-
 }
