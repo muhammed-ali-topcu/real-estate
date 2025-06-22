@@ -12,6 +12,7 @@ use App\Models\Country;
 use App\Models\District;
 use App\Models\User;
 use Database\Seeders\RolesSeeder;
+use Illuminate\Http\Response;
 
 test('admin can create a property', function () {
     // Create necessary related models
@@ -19,16 +20,11 @@ test('admin can create a property', function () {
     $city     = City::factory()->create(['country_id' => $country->id]);
     $district = District::factory()->create(['city_id' => $city->id]);
 
-    $this->seed(RolesSeeder::class);
-    $admin = User::factory()->create();
-    $admin->assignRole(RolesEnum::ADMIN->value);
+    
 
-    // Visit the create property page
-    $response = $this->actingAs($admin)
-        ->get(route('admin.properties.create'));
-
-    // Assert we can see the create property page
-    $response->assertStatus(200);
+    $response = setubAdmin()
+        ->get(route('admin.properties.create'))
+        ->assertStatus(200);
 
     // Create a property
     $payload = [
@@ -46,7 +42,7 @@ test('admin can create a property', function () {
         'district_id'   => $district->id,
     ];
 
-    $response = $this->actingAs($admin)
+    $response = setubAdmin()
         ->post(route('admin.properties.store'), $payload);
 
     //Assert we were redirected to the properties index
@@ -57,9 +53,7 @@ test('admin can create a property', function () {
 });
 
 test('property creation fails with invalid data', function () {
-    $this->seed(RolesSeeder::class);
-    $admin = User::factory()->create();
-    $admin->assignRole(RolesEnum::ADMIN->value);
+   
 
     $payload = [
         'title'         => 'Test Property',
@@ -75,7 +69,7 @@ test('property creation fails with invalid data', function () {
     ];
 
     // Try to create a property with invalid data
-    $response = $this->actingAs($admin)
+    $response = setubAdmin()
         ->post(route('admin.properties.store'), $payload);
 
     // Assert we see validation errors
