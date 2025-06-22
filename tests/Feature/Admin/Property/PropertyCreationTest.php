@@ -1,18 +1,14 @@
 <?php
 
-namespace Tests\Feature\Admin;
+namespace Tests\Feature\Admin\Property;
 
 use App\Enums\PropertyListingTypes;
 use App\Enums\PropertyRooms;
 use App\Enums\PropertyStatuses;
 use App\Enums\PropertyTypes;
-use App\Enums\RolesEnum;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\District;
-use App\Models\User;
-use Database\Seeders\RolesSeeder;
-use Illuminate\Http\Response;
 
 test('admin can create a property', function () {
     // Create necessary related models
@@ -20,7 +16,7 @@ test('admin can create a property', function () {
     $city     = City::factory()->create(['country_id' => $country->id]);
     $district = District::factory()->create(['city_id' => $city->id]);
 
-    
+
 
     $response = setubAdmin()
         ->get(route('admin.properties.create'))
@@ -53,7 +49,7 @@ test('admin can create a property', function () {
 });
 
 test('property creation fails with invalid data', function () {
-   
+
 
     $payload = [
         'title'         => 'Test Property',
@@ -65,7 +61,7 @@ test('property creation fails with invalid data', function () {
         'rooms'         => 'sss flsdkjf lksd',
         'area'          => 'jflds',
         'status'        => 'sss',
-        
+
     ];
 
     // Try to create a property with invalid data

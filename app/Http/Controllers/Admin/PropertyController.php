@@ -11,6 +11,7 @@ use App\Http\Requests\PropertyUpdateRequest;
 use App\Models\Country;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class PropertyController extends Controller
@@ -78,14 +79,14 @@ class PropertyController extends Controller
             'listingTypes'  => PropertyListingTypes::all(),
             'rooms'         => PropertyRooms::all(),
             'statuses'      => PropertyStatuses::all(),
-            
+
         ]);
     }
     public function store(PropertyCreateRequest $request)
     {
         $property = new Property();
         $property->fill($request->validated());
-        $property->user_id = auth()->user()->id;
+        $property->user_id = Auth::id();
         $property->status  = PropertyStatuses::PENDING;
         $property->save();
         return redirect()->route('admin.properties.index')->with('success', __('Property created successfully'));
