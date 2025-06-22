@@ -19,14 +19,30 @@ export default {
     emits: ['update:country-id','update:city-id','update:district-id'],
 
     props: {
+        countryId: {
+            type: Number,
+            default: null,
+        },
+        cityId: {
+            type: Number,
+            default: null,
+        },
+        districtId: {
+            type: Number,
+            default: null,
+        },
+        errors: {
+            type: Object,
+            default: () => ({})
+        },
      
     },
     data() {
         return {
             form: this.$inertia.form({
-                country_id: null,
-                city_id: null,
-                district_id: null,
+                country_id: this.countryId,
+                city_id: this.cityId,
+                district_id: this.districtId,
             }),
             countries: [],
             cities: [],
@@ -91,8 +107,13 @@ export default {
         },
     },
     created() {
-        console.log('created')
         this.getCountries();
+        if (this.countryId) {
+            this.getCities();
+        }
+        if (this.cityId) {
+            this.getDistricts();
+        }
     },
 
 
@@ -103,7 +124,7 @@ export default {
 <template>
     <div class="grid grid-cols-3 gap-2">
         <div class="w-full">
-            <label for="country_id" class="block text-sm font-medium text-gray-700">{{ $t('Country') }}</label>
+            <Label for="country_id" class="block text-sm font-medium text-gray-700">{{ $t('Country') }}</Label>
             <select 
                 id="country_id" 
                 v-model="form.country_id" 
@@ -115,10 +136,11 @@ export default {
                     {{ country.name }}
                 </option>
             </select>
-        </div>
+            <InputError class="mt-2" :message="errors.country_id" />
+            </div>
 
         <div class="w-full">
-            <label for="city_id" class="block text-sm font-medium text-gray-700">{{ $t('City') }}</label>
+            <Label for="city_id" class="block text-sm font-medium text-gray-700">{{ $t('City') }}</Label>
             <select 
                 id="city_id" 
                 v-model="form.city_id" 
@@ -130,10 +152,11 @@ export default {
                     {{ city.name }}
                 </option>
             </select>
+            <InputError class="mt-2" :message="errors.city_id" />
         </div>
 
         <div class="w-full">    
-            <label for="district_id" class="block text-sm font-medium text-gray-700">{{ $t('District') }}</label>
+            <Label for="district_id" class="block text-sm font-medium text-gray-700">{{ $t('District') }}</Label>
             <select 
                 id="district_id" 
                 v-model="form.district_id"
@@ -144,7 +167,7 @@ export default {
                     {{ district.name }}
                 </option>
             </select>
+            <InputError class="mt-2" :message="errors.district_id" />
         </div>
     </div>
 </template>
-

@@ -82,7 +82,7 @@ export default {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex items-center justify-between">
             <h1 class="text-3xl font-bold">{{ $t('Properties') }}</h1>
-            <Link :href="route('admin.properties.create')" class="btn-primary"> {{ $t('Create property') }}</Link>
+            <Link :href="route('admin.properties.create')" class="rounded p-2 bg-blue-500 "> {{ $t('Create property') }}</Link>
         </div>
 
         <form @submit.prevent="applyFilters" class="my-4">
@@ -95,18 +95,18 @@ export default {
                 </div>
 
                 <!-- Property Type -->
-                <div>
-                    <label class="block">{{ $t('Property Type') }}</label>
-                    <select v-model="filters.property_type" class="rounded border p-2">
+                <div class="block">
+                    <label >{{ $t('Property Type') }}</label>
+                    <select v-model="filters.property_type" class="rounded border p-2 w-full">
                         <option :value="null">{{ $t('All') }}</option>
                         <option v-for="type in propertyTypes" :key="type" :value="type">{{ type }}</option>
                     </select>
                 </div>
 
                 <!-- Listing Type -->
-                <div>
-                    <label class="block">{{ $t('Listing Type') }}</label>
-                    <select v-model="filters.listing_type" class="rounded border p-2">
+                <div class="block">
+                    <label class="">{{ $t('Listing Type') }}</label>
+                    <select v-model="filters.listing_type" class="rounded border p-2 w-full">
                         <option :value="null">{{ $t('All') }}</option>
                         <option v-for="type in listingTypes" :key="type" :value="type">{{ type }}</option>
                     </select>
@@ -115,7 +115,7 @@ export default {
                 <!-- Status -->
                 <div>
                     <label class="block">{{ $t('Status') }}</label>
-                    <select v-model="filters.status" class="rounded border p-2">
+                    <select v-model="filters.status" class="rounded border p-2 w-full">
                         <option :value="null">{{ $t('All') }}</option>
                         <option v-for="status in statuses" :key="status" :value="status">{{ status }}</option>
                     </select>
@@ -133,10 +133,10 @@ export default {
                 </div>
 
                 <div class="flex items-center justify-between mt-5 gap-2">
-                    <button type="submit" class="rounded border p-2 bg-blue-500  text-white hover:bg-blue-600">{{
+                    <button type="submit" class="rounded p-2 bg-blue-500  text-white hover:bg-blue-600">{{
                         $t('Search') }}</button>
                     <button type="button" @click="resetFilters"
-                        class="rounded border p-2 bg-red-500  text-white hover:bg-red-600">{{ $t('Reset') }}</button>
+                        class="rounded p-2 bg-red-500  text-white hover:bg-red-600">{{ $t('Reset') }}</button>
                 </div>
 
             </div>
@@ -170,13 +170,13 @@ export default {
                     <td>{{ property.created_at }}</td>
                     <td>
                         <Link v-if="$page.props.can.edit_properties" :href="route('admin.properties.edit', property.id)"
-                            class="m-2 rounded hover:bg-amber-100" as="button">
+                            class="m-2 rounded  px-2 py-1 bg-amber-500 hover:bg-amber-300" as="button">
                         {{ $t('Edit') }}
                         </Link>
 
                         <Link v-if="$page.props.can.delete_properties"
                             :href="route('admin.properties.destroy', property.id)" method="delete" as="button"
-                            class="rounded bg-red-500 p-2 font-bold text-white hover:bg-red-700">
+                            class="rounded bg-red-500 px-2 py-1 font-bold text-white hover:bg-red-700">
                         {{ $t('Delete') }}
                         </Link>
                     </td>

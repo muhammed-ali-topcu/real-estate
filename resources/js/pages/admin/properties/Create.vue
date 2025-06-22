@@ -149,10 +149,14 @@ export default {
                     </div>
                 </div>
 
+
+                
                 <div class="my-4">
                     <Address @update:country-id="value => form.country_id = value"
                         @update:city-id="value => form.city_id = value"
-                        @update:district-id="value => form.district_id = value" />
+                        @update:district-id="value => form.district_id = value" 
+                        :errors="form.errors"
+                         />
                 </div>
 
 
@@ -170,8 +174,18 @@ export default {
                         :placeholder="$t('Description')" rows="5"></textarea>
                     <InputError class="" :message="form.errors.description" />
                 </div>
-                <button type="submit" class="m-2 rounded bg-blue-400 px-2" :disabled="form.processing">{{ $t('Save')
-                }}</button>
+
+                <div class="flex justify-end space-x-3 pt-4">
+                    <Button type="button" variant="outline" @click="$inertia.visit(route('admin.properties.index'))"
+                        :disabled="form.processing" class="rounded bg-gray-400 px-2 py-1">
+                        {{ $t('Cancel') }}
+                    </Button>
+                    <Button type="submit" :disabled="form.processing" class="rounded bg-blue-400 px-2 py-1">
+                        <span v-if="form.processing">{{ $t('Saving') }}...</span>
+                        <span v-else>{{ $t('Save') }}</span>
+                    </Button>
+                </div>
+
             </form>
         </div>
     </AppLayout>

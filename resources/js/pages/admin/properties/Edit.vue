@@ -1,144 +1,196 @@
 <script>
 import InputError from '@/components/InputError.vue';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox/index.js';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import Input from '@/components/ui/input/Input.vue';
+import Label from '@/components/ui/label/Label.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
+import { Select } from '@/components/ui/select/index.js';
+import Address from '@/pages/admin/properties/Addres.vue';
 
 export default {
     components: {
-        Checkbox,
+        Select,
         AppLayout,
         Head,
-        Button,
         InputError,
         Input,
         Label,
+        Address,
     },
     props: {
-        user: Object,
-        roles: Array,
+        property: {
+            type: Object,
+            required: true,
+        },
+        propertyTypes: {
+            type: Array,
+            required: true,
+        },
+        listingTypes: {
+            type: Array,
+            required: true,
+        },
+        statuses: {
+            type: Array,
+            required: true,
+        },
+        rooms: {
+            type: Array,
+            required: true,
+        },
     },
+
     data() {
         return {
-            form: useForm({
-                name: this.user.name,
-                email: this.user.email,
-                roles: this.user.roles,
-                is_active: this.user.is_active,
-                change_password: false,
-                password: '',
-                password_confirmation: '',
-            }),
+            form: this.$inertia.form({
+                title: this.property.title,
+                description: this.property.description,
+                price: this.property.price,
+                status: this.property.status,
+                property_type: this.property.property_type,
+                listing_type: this.property.listing_type,
+                rooms: this.property.rooms,
+                admin_notes: this.property.admin_notes,
+                approved_at: this.property.approved_at,
+                approved_by: this.property.approved_by,
+                area: this.property.area,
+                address: this.property.address,
+                country_id: this.property.country_id,
+                city_id: this.property.city_id,
+                district_id: this.property.district_id,
+            })
         };
     },
     methods: {
         submit() {
-            this.form.put(route('admin.users.update', this.user.id));
-        },
+            this.form.put(route('admin.properties.update', this.property.id), {
+                preserveScroll: true
+            });
+        }
     },
+
 
 };
 </script>
 
 <template>
+
+    <Head :title="$t('Edit property')" />
+
     <AppLayout>
-        <Head :title="$t('Edit user')" />
+        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 gap-96">
+            <form @submit.prevent="submit">
 
-        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <div class="mx-auto w-full max-w-2xl">
-                <h1 class="mb-6 text-2xl font-semibold">Edit User</h1>
-
-                <form @submit.prevent="submit" class="space-y-6">
-                    <div class="space-y-2">
-                        <Label for="name">Name</Label>
-                        <Input id="name" v-model="form.name" required autocomplete="name" placeholder="Full name" :disabled="form.processing" />
-                        <InputError :message="form.errors.name" />
-                    </div>
-
-                    <div class="space-y-2">
-                        <Label for="email">Email</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            v-model="form.email"
-                            required
-                            autocomplete="email"
-                            placeholder="Email address"
-                            :disabled="form.processing"
-                        />
-                        <InputError :message="form.errors.email" />
-                    </div>
-
-                    <div class="space-y-2">
-                        <Label for="roles">{{ $t('Role') }}</Label>
-                        <select id="roles" class="mt-1 block w-full" v-model="form.roles" multiple>
-                            <option v-for="role in roles" :value="role">
-                                {{ $t(role) }}
+                <h1 class="text-xl font-semibold leading-tight tracking-tight text-gray-900 dark:text-white">
+                    {{ $t('Edit property') }}
+                </h1>
+                <div class="grid ">
+                    <Label for="title">{{ $t('Title') }}</Label>
+                    <Input id="title" class="mt-1 block w-full" v-model="form.title" required
+                        :placeholder="$t('Title')" />
+                    <InputError class="mt-2" :message="form.errors.title" />
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="my-4">
+                        <Label for="property_type">{{ $t('Property Type') }}</Label>
+                        <select id="property_type" class="mt-1 block w-full rounded border p-1"
+                            v-model="form.property_type">
+                            <option :value="null" disabled selected>{{ $t('Select Property Type') }}</option>
+                            <option v-for="property_type in propertyTypes" :value="property_type">
+                                {{ $t(property_type) }}
                             </option>
                         </select>
-                        <InputError class="mt-2" :message="form.errors.roles" />
+                        <InputError class="mt-2" :message="form.errors.property_type" />
                     </div>
 
-                    <div class="grid grid-cols-2">
-                        <div class="">
-                            <Label for="is_active">
-                                <Checkbox id="is_active" name="is_active" v-model="form.is_active" />
-                                {{ $t('Active') }}
-                            </Label>
-                            <InputError class="mt-2" :message="form.errors.is_active" />
-                        </div>
-
-                        <div class="space-y-2">
-                            <Label for="change_password">
-                                <Checkbox id="change_password" name="change_password" v-model="form.change_password" />
-                                {{ $t('change password') }}
-                            </Label>
-
-                            <InputError class="mt-2" :message="form.errors.change_password" />
-                        </div>
+                    <div class="my-4">
+                        <Label for="listing_type">{{ $t('Listing Type') }}</Label>
+                        <select id="listing_type" class="mt-1 block w-full rounded border p-1"
+                            v-model="form.listing_type">
+                            <option :value="null" disabled selected>{{ $t('Select Listing Type') }}</option>
+                            <option v-for="listing_type in listingTypes" :value="listing_type">
+                                {{ $t(listing_type) }}
+                            </option>
+                        </select>
+                        <InputError class="mt-2" :message="form.errors.listing_type" />
                     </div>
 
-                    <div v-if="form.change_password" class="space-y-2">
-                        <div class="mt-4 grid gap-4">
-                            <Label for="password">{{ $t('New Password') }}</Label>
-                            <Input
-                                id="password"
-                                class="mt-1 block w-full"
-                                v-model="form.password"
-                                :placeholder="$t('Password')"
-                                type="password"
-                            />
-                            <InputError :message="form.errors.password" />
-                        </div>
-
-                        <div class="mt-4 grid gap-4">
-                            <Label for="password_confirmation">{{ $t('Confirm password') }}</Label>
-                            <Input
-                                id="password_confirmation"
-                                class="mt-1 block w-full"
-                                v-model="form.password_confirmation"
-
-                                :placeholder="$t('Confirm password')"
-                                type="password"
-                            />
-                            <InputError class="mt-2" :message="form.errors.password_confirmation" />
-                        </div>
+                    <div class="my-4">
+                        <Label for="rooms">{{ $t('Rooms') }}</Label>
+                        <select id="rooms" class="mt-1 block w-full rounded border p-1" v-model="form.rooms">
+                            <option :value="null" disabled selected>{{ $t('Select Rooms') }}</option>
+                            <option v-for="room in rooms" :value="room">
+                                {{ $t(room) }}
+                            </option>
+                        </select>
+                        <InputError class="mt-2" :message="form.errors.rooms" />
                     </div>
 
-                    <div class="flex justify-end space-x-3 pt-4">
-                        <Button type="button" variant="outline" @click="$inertia.visit(route('admin.users.index'))" :disabled="form.processing">
-                            Cancel
-                        </Button>
-                        <Button type="submit" :disabled="form.processing">
-                            <span v-if="form.processing">Saving...</span>
-                            <span v-else>Save Changes</span>
-                        </Button>
+
+                    <div class="my-4">
+                        <Label for="status">{{ $t('Status') }}</Label>
+                        <select id="status" class="mt-1 block w-full rounded border p-1" v-model="form.status">
+                            <option :value="null" disabled selected>{{ $t('Select Status') }}</option>
+                            <option v-for="status in statuses" :value="status">
+                                {{ $t(status) }}
+                            </option>
+                        </select>
+                        <InputError class="mt-2" :message="form.errors.status" />
                     </div>
-                </form>
-            </div>
+
+                    <div class="my-4">
+                        <Label for="price">{{ $t('Price') }}</Label>
+                        <Input id="price" class="mt-1 block w-full" v-model="form.price" required
+                            :placeholder="$t('Price')" type="number" />
+                        <InputError class="mt-2" :message="form.errors.price" />
+                    </div>
+
+                    <div class="my-4">
+                        <Label for="area">{{ $t('Area in square meters') }}</Label>
+                        <Input id="area" class="mt-1 block w-full" v-model="form.area" required
+                            :placeholder="$t('Area in square meters')" type="number" />
+                        <InputError class="mt-2" :message="form.errors.area" />
+                    </div>
+                </div>
+
+                <div class="my-4">
+                    <Address @update:country-id="value => form.country_id = value"
+                        @update:city-id="value => form.city_id = value"
+                        @update:district-id="value => form.district_id = value" 
+                        :country-id="property.country_id"
+                        :city-id="property.city_id" 
+                        :district-id="property.district_id"
+                        :errors="form.errors"
+                         />
+                </div>
+
+
+                <div class="grid my-4">
+                    <Label for="address">{{ $t('Address') }}</Label>
+                    <textarea class="mt-2 block w-full  p-2 rounded border " id="address" v-model="form.address"
+                        :placeholder="$t('Address')" rows="5"></textarea>
+                    <InputError class="" :message="form.errors.address" />
+                </div>
+
+
+                <div class="grid my-4">
+                    <Label for="description">{{ $t('Description') }}</Label>
+                    <textarea class="mt-2 block w-full rounded p-2 border " id="description" v-model="form.description"
+                        :placeholder="$t('Description')" rows="5"></textarea>
+                    <InputError class="" :message="form.errors.description" />
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-4">
+                    <Button type="button" variant="outline" @click="$inertia.visit(route('admin.properties.index'))"
+                        :disabled="form.processing" class="rounded bg-gray-400 px-2 py-1">
+                        {{ $t('Cancel') }}
+                    </Button>
+                    <Button type="submit" :disabled="form.processing" class="rounded bg-blue-400 px-2 py-1">
+                        <span v-if="form.processing">{{ $t('Saving') }}...</span>
+                        <span v-else>{{ $t('Save') }}</span>
+                    </Button>
+                </div>
+            </form>
         </div>
     </AppLayout>
 </template>

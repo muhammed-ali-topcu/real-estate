@@ -7,6 +7,7 @@ use App\Enums\PropertyStatuses;
 use App\Enums\PropertyTypes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PropertyCreateRequest;
+use App\Http\Requests\PropertyUpdateRequest;
 use App\Models\Country;
 use App\Models\Property;
 use Illuminate\Http\Request;

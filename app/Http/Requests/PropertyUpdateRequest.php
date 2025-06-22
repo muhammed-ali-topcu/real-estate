@@ -9,7 +9,7 @@ use App\Enums\PropertyTypes;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class PropertyCreateRequest extends FormRequest
+class PropertyUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
