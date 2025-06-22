@@ -51,7 +51,9 @@ export default {
                 approved_by: '',
                 area: '',
                 address: '',
-                country_id: null
+                country_id: null,
+                city_id: null,
+                district_id: null,
             })
         };
     },

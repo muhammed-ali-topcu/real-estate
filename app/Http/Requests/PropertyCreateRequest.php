@@ -35,6 +35,9 @@ class PropertyCreateRequest extends FormRequest
             'rooms'         => 'required|string|in:' . implode(',', PropertyRooms::all()),
             'area'          => 'required|numeric',
             'status'        => 'required|string|in:' . implode(',', PropertyStatuses::all()),
+            'country_id'    => 'required|exists:countries,id',
+            'city_id'       => 'required|exists:cities,id',
+            'district_id'   => 'required|exists:districts,id',
         ];
     }
 }
