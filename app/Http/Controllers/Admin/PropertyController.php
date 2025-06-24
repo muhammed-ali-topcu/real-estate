@@ -25,8 +25,18 @@ class PropertyController extends Controller
         $query->when(request('search'), function ($query, $search) {
             $query->where('title', 'like', "%{$search}%")
                 ->orWhere('description', 'like', "%{$search}%")
-                ->orWhere('city', 'like', "%{$search}%")
-                ->orWhere('address', 'like', "%{$search}%");
+                ->orWhere('address', 'like', "%{$search}%")
+                ->orWhereHas('country', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })
+                ->orWhereHas('city', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })
+                ->orWhereHas('district', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })
+                ;
+
         });
 
         $query->when(request('property_type'), function ($query) {

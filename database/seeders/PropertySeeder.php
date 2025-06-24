@@ -12,9 +12,7 @@ class PropertySeeder extends Seeder
      */
     public function run(): void
     {
-
-
-        $properties = \App\Models\Property::factory(1)->make();
+        $properties = \App\Models\Property::factory(100)->make();
         foreach ($properties as $property) {
             $this->_associateRandomAddress($property);
         }

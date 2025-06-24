@@ -152,7 +152,7 @@ export default {
                     <th>{{ $t('Price') }}</th>
                     <th>{{ $t('rooms') }}</th>
                     <th>{{ $t('Status') }}</th>
-                    <th>{{ $t('City') }}></th>
+                    <th>{{ $t('City') }}</th>
                     <th>{{ $t('Created at') }}</th>
                     <th>{{ $t('Actions') }}</th>
                 </tr>
@@ -166,6 +166,7 @@ export default {
                     <td>{{ property.price }}</td>
                     <td>{{ property.rooms }}</td>
                     <td>{{ property.status }}</td>
+                    <td> {{ property.district }} / {{ property.city }} / {{ property.country }}</td>
                     <td>{{ property.created_at }}</td>
                     <td>
                         <Link v-if="$page.props.can.edit_properties" :href="route('admin.properties.edit', property.id)"
