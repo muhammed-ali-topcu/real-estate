@@ -17,8 +17,10 @@ class PropertyController extends Controller
 {
     public function index()
     {
-
-        $query = Property::query();
+        $query = Property::query()
+            ->with('country')
+            ->with('city')
+            ->with('district');
 
         $query->when(request('search'), function ($query, $search) {
             $query->where('title', 'like', "%{$search}%")
@@ -47,7 +49,7 @@ class PropertyController extends Controller
             ->paginate(10)
             ->withQueryString()
             ->through(
-                fn ($property) => [
+                fn($property) => [
                     'id' => $property->id,
                     'title' => Str::limit($property->title, 20, '...'),
                     'price' => $property->price,
@@ -55,7 +57,9 @@ class PropertyController extends Controller
                     'property_type' => $property->property_type,
                     'listing_type' => $property->listing_type,
                     'rooms' => $property->rooms,
-                    'admin_notes' => $property->admin_notes,
+                    'country' => $property->country->name,
+                    'city' => $property->city->name,
+                    'district' => $property->district->name,
                     'approved_at' => $property->approved_at,
                     'approved_by' => $property->approved_by,
                     'created_at' => $property->created_at->format('Y-m-d H:i:s'),
@@ -122,7 +126,6 @@ class PropertyController extends Controller
     public function destroy(Property $property)
     {
         $property->delete();
-
         return redirect()->route('admin.properties.index')->with('success', __('Property deleted successfully'));
     }
 }

@@ -64,10 +64,10 @@ export default {
             );
         },
         resetFilters() {
+            this.filters.status = null;
             this.filters.search = '';
             this.filters.property_type = null;
             this.filters.listing_type = null;
-            this.filters.status = null;
             this.filters.min_price = '';
             this.filters.max_price = '';
             this.filters.min_rooms = '';
@@ -82,7 +82,8 @@ export default {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex items-center justify-between">
             <h1 class="text-3xl font-bold">{{ $t('Properties') }}</h1>
-            <Link :href="route('admin.properties.create')" class="rounded p-2 bg-blue-500 "> {{ $t('Create property') }}</Link>
+            <Link :href="route('admin.properties.create')" class="rounded p-2 bg-blue-500 "> {{ $t('Create property') }}
+            </Link>
         </div>
 
         <form @submit.prevent="applyFilters" class="my-4">
@@ -96,7 +97,7 @@ export default {
 
                 <!-- Property Type -->
                 <div class="block">
-                    <label >{{ $t('Property Type') }}</label>
+                    <label>{{ $t('Property Type') }}</label>
                     <select v-model="filters.property_type" class="rounded border p-2 w-full">
                         <option :value="null">{{ $t('All') }}</option>
                         <option v-for="type in propertyTypes" :key="type" :value="type">{{ type }}</option>
@@ -138,11 +139,8 @@ export default {
                     <button type="button" @click="resetFilters"
                         class="rounded p-2 bg-red-500  text-white hover:bg-red-600">{{ $t('Reset') }}</button>
                 </div>
-
             </div>
-
         </form>
-
 
         <table class="table-bordered table-striped table w-full mt-4">
             <thead>
@@ -154,6 +152,7 @@ export default {
                     <th>{{ $t('Price') }}</th>
                     <th>{{ $t('rooms') }}</th>
                     <th>{{ $t('Status') }}</th>
+                    <th>{{ $t('City') }}></th>
                     <th>{{ $t('Created at') }}</th>
                     <th>{{ $t('Actions') }}</th>
                 </tr>
