@@ -54,7 +54,6 @@ export default {
                 country_id: null,
                 city_id: null,
                 district_id: null,
-                avatar: null
             })
         };
     },
@@ -174,26 +173,6 @@ export default {
                     <InputError class="" :message="form.errors.description" />
                 </div>
 
-
-                <div class="my-4">
-                    <Label for="avatar">{{ $t('Avatar') }}</Label>
-                    <Input
-                        id="avatar"
-                        type="file"
-                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        @change="form.avatar = $event.target.files[0]"
-                        accept="image/*"
-                    />
-                    <InputError class="mt-2" :message="form.errors.avatar" />
-                    <div v-if="form.progress" class="mt-2">
-                        <progress
-                            :value="form.progress.percentage"
-                            max="100"
-                            class="w-full h-2 rounded bg-gray-200"
-                        ></progress>
-                        <span class="text-xs text-gray-600 ml-2">{{ form.progress.percentage }}%</span>
-                    </div>
-                </div>
 
                 <progress v-if="form.progress" :value="form.progress.percentage" max="100">
                     {{ form.progress.percentage }}%

@@ -162,7 +162,7 @@ export default {
                 <tr v-for="property in properties.data" :key="property.id">
                     <td>{{ property.id }}</td>
                     <td>
-                        <img :src="property.avatar" class="rounded h-10"/>
+                        <img :src="property.first_image_url" class="rounded h-10"/>
                     </td>
                     <td>{{ property.title }}</td>
                     <td>{{ property.property_type }}</td>

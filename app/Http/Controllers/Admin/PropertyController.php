@@ -74,7 +74,7 @@ class PropertyController extends Controller
                     'approved_at' => $property->approved_at,
                     'approved_by' => $property->approved_by,
                     'created_at' => $property->created_at->format('Y-m-d H:i:s'),
-                    'avatar' => $property->getFirstMediaUrl(),
+                    'first_image_url' => $property->getFirstMediaUrl('images') ?? '',
                 ],
             );
 
@@ -105,10 +105,6 @@ class PropertyController extends Controller
         $property->user_id = Auth::id();
         $property->status = PropertyStatuses::PENDING;
         $property->save();
-        if (request()->hasFile('avatar')) {
-            $property->addMedia(request()->file('avatar'))->toMediaCollection();
-        }
-
 
         return redirect()->route('admin.properties.index')->with('success', __('Property created successfully'));
     }
@@ -138,37 +134,7 @@ class PropertyController extends Controller
         $property->fill($request->validated());
         $property->save();
 
-        if (request()->hasFile('avatar')) {
-            $property->clearMediaCollection();
-            $property->addMedia(request()->file('avatar'))->toMediaCollection();
-        }
-
         return redirect()->route('admin.properties.index')->with('success', __('Property updated successfully'));
-    }
-
-    public function uploadImage(Property $property, Request $request)
-    {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        if ($request->hasFile('image')) {
-            $property->addMedia($request->file('image'))->toMediaCollection('images');
-        }
-
-        return back()->with('success', __('Image uploaded successfully.'));
-    }
-
-    public function deleteImage(Property $property, int $mediaId)
-    {
-        $media = $property->getMedia('images')->find($mediaId);
-
-        if ($media) {
-            $media->delete();
-            return back()->with('success', __('Image deleted successfully.'));
-        }
-
-        return back()->with('error', __('Image not found.'));
     }
 
     public function destroy(Property $property)
