@@ -12,6 +12,7 @@ use App\Http\Requests\PropertyUpdateRequest;
 use App\Models\Property;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class PropertyController extends Controller
 {
@@ -21,9 +22,7 @@ class PropertyController extends Controller
             ->with('country')
             ->with('city')
             ->with('district')
-            ->with('media')
-
-        ;
+            ->with('media');
 
         $query->when(request('search'), function ($query, $search) {
             $query->where('title', 'like', "%{$search}%")
@@ -38,8 +37,7 @@ class PropertyController extends Controller
                 ->orWhereHas('district', function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%");
                 })
-                ;
-
+            ;
         });
 
         $query->when(request('property_type'), function ($query) {
@@ -76,7 +74,7 @@ class PropertyController extends Controller
                     'approved_at' => $property->approved_at,
                     'approved_by' => $property->approved_by,
                     'created_at' => $property->created_at->format('Y-m-d H:i:s'),
-                    'avatar'=>$property->getFirstMediaUrl(),
+                    'avatar' => $property->getFirstMediaUrl(),
                 ],
             );
 
@@ -107,8 +105,8 @@ class PropertyController extends Controller
         $property->user_id = Auth::id();
         $property->status = PropertyStatuses::PENDING;
         $property->save();
-        if($request->hasFile('avatar')){
-            $property->addMedia($request->file('avatar'))->toMediaCollection();
+        if (request()->hasFile('avatar')) {
+            $property->addMedia(request()->file('avatar'))->toMediaCollection();
         }
 
 
@@ -117,6 +115,7 @@ class PropertyController extends Controller
 
     public function show(Property $property)
     {
+        $property->load('media');
         return inertia('admin/properties/Show', [
             'property' => $property,
         ]);
@@ -124,6 +123,7 @@ class PropertyController extends Controller
 
     public function edit(Property $property)
     {
+        $property->load('media');
         return inertia('admin/properties/Edit', [
             'property' => $property,
             'propertyTypes' => PropertyTypes::all(),
@@ -138,13 +138,37 @@ class PropertyController extends Controller
         $property->fill($request->validated());
         $property->save();
 
-        if($request->hasFile('avatar')){
+        if (request()->hasFile('avatar')) {
             $property->clearMediaCollection();
-            $property->addMedia($request->file('avatar'))->toMediaCollection();
+            $property->addMedia(request()->file('avatar'))->toMediaCollection();
         }
 
-
         return redirect()->route('admin.properties.index')->with('success', __('Property updated successfully'));
+    }
+
+    public function uploadImage(Property $property, Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $property->addMedia($request->file('image'))->toMediaCollection('images');
+        }
+
+        return back()->with('success', __('Image uploaded successfully.'));
+    }
+
+    public function deleteImage(Property $property, int $mediaId)
+    {
+        $media = $property->getMedia('images')->find($mediaId);
+
+        if ($media) {
+            $media->delete();
+            return back()->with('success', __('Image deleted successfully.'));
+        }
+
+        return back()->with('error', __('Image not found.'));
     }
 
     public function destroy(Property $property)

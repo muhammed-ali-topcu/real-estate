@@ -15,8 +15,8 @@ defineProps<{
 }>();
 
 const form = useForm({
-    email: '',
-    password: '',
+    email: 'admin@example.com', // TODO: remove this
+    password: 'password', // TODO: remove this
     remember: false,
 });
 

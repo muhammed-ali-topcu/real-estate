@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\PropertyController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:'.\App\Enums\RolesEnum::ADMIN->value])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:' . \App\Enums\RolesEnum::ADMIN->value])->group(function () {
 
     // users
     Route::get('users', [UserController::class, 'index'])->name('users.index')->can(PermissionsEnum::LIST_USERS->value);
@@ -22,6 +22,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:'.
     Route::post('properties', [PropertyController::class, 'store'])->name('properties.store')->can(PermissionsEnum::CREATE_PROPERTIES->value);
     Route::get('properties/{property}/edit', [PropertyController::class, 'edit'])->name('properties.edit')->can(PermissionsEnum::EDIT_PROPERTIES->value);
     Route::put('properties/{property}', [PropertyController::class, 'update'])->name('properties.update')->can(PermissionsEnum::EDIT_PROPERTIES->value);
+    Route::post('properties/{property}/images', [PropertyController::class, 'uploadImage'])->name('properties.uploadImage')->can(PermissionsEnum::EDIT_PROPERTIES->value);
+    Route::delete('properties/{property}/images/{mediaId}', [PropertyController::class, 'deleteImage'])->name('properties.deleteImage')->can(PermissionsEnum::EDIT_PROPERTIES->value);
     Route::delete('properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy')->can(PermissionsEnum::DELETE_PROPERTIES->value);
 
     // address
@@ -31,5 +33,5 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:'.
     Route::get('address/districts/{city}', [AddressController::class, 'getDistricts'])->name('address.districts');
 });
 
-Route::middleware(['auth', 'verified', 'role:'.\App\Enums\RolesEnum::ADMIN->value])->group(function () {});
+Route::middleware(['auth', 'verified', 'role:' . \App\Enums\RolesEnum::ADMIN->value])->group(function () {});
 Route::impersonate();
