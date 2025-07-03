@@ -58,14 +58,17 @@ export default {
                 country_id: this.property.country_id,
                 city_id: this.property.city_id,
                 district_id: this.property.district_id,
+                avatar:null,
+                _method: 'put',
             })
         };
     },
     methods: {
         submit() {
-            this.form.put(route('admin.properties.update', this.property.id), {
-                preserveScroll: true
+            this.form.post(route('admin.properties.update', this.property.id), {
+                preserveScroll: true,
             });
+
         }
     },
 
@@ -84,6 +87,8 @@ export default {
                 <h1 class="text-xl font-semibold leading-tight tracking-tight text-gray-900 dark:text-white">
                     {{ $t('Edit property') }}
                 </h1>
+
+
                 <div class="grid ">
                     <Label for="title">{{ $t('Title') }}</Label>
                     <Input id="title" class="mt-1 block w-full" v-model="form.title" required
@@ -156,9 +161,9 @@ export default {
                 <div class="my-4">
                     <Address @update:country-id="value => form.country_id = value"
                         @update:city-id="value => form.city_id = value"
-                        @update:district-id="value => form.district_id = value" 
+                        @update:district-id="value => form.district_id = value"
                         :country-id="property.country_id"
-                        :city-id="property.city_id" 
+                        :city-id="property.city_id"
                         :district-id="property.district_id"
                         :errors="form.errors"
                          />
@@ -178,6 +183,26 @@ export default {
                     <textarea class="mt-2 block w-full rounded p-2 border " id="description" v-model="form.description"
                         :placeholder="$t('Description')" rows="5"></textarea>
                     <InputError class="" :message="form.errors.description" />
+                </div>
+
+                <div class="my-4">
+                    <Label for="avatar">{{ $t('Avatar') }}</Label>
+                    <Input
+                        id="avatar"
+                        type="file"
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        @change="form.avatar = $event.target.files[0]"
+                        accept="image/*"
+                    />
+                    <InputError class="mt-2" :message="form.errors.avatar" />
+                    <div v-if="form.progress" class="mt-2">
+                        <progress
+                            :value="form.progress.percentage"
+                            max="100"
+                            class="w-full h-2 rounded bg-gray-200"
+                        ></progress>
+                        <span class="text-xs text-gray-600 ml-2">{{ form.progress.percentage }}%</span>
+                    </div>
                 </div>
 
                 <div class="flex justify-end space-x-3 pt-4">

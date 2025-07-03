@@ -146,6 +146,7 @@ export default {
             <thead>
                 <tr>
                     <th>{{ $t('ID') }}</th>
+                    <td>{{ $t('Image')}}</td>
                     <th>{{ $t('Title') }}</th>
                     <th>{{ $t('Property Type') }}</th>
                     <th>{{ $t('Listing Type') }}</th>
@@ -160,6 +161,9 @@ export default {
             <tbody>
                 <tr v-for="property in properties.data" :key="property.id">
                     <td>{{ property.id }}</td>
+                    <td>
+                        <img :src="property.avatar" class="rounded h-10"/>
+                    </td>
                     <td>{{ property.title }}</td>
                     <td>{{ property.property_type }}</td>
                     <td>{{ property.listing_type }}</td>

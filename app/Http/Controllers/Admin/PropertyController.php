@@ -20,7 +20,10 @@ class PropertyController extends Controller
         $query = Property::query()
             ->with('country')
             ->with('city')
-            ->with('district');
+            ->with('district')
+            ->with('media')
+
+        ;
 
         $query->when(request('search'), function ($query, $search) {
             $query->where('title', 'like', "%{$search}%")
@@ -73,6 +76,7 @@ class PropertyController extends Controller
                     'approved_at' => $property->approved_at,
                     'approved_by' => $property->approved_by,
                     'created_at' => $property->created_at->format('Y-m-d H:i:s'),
+                    'avatar'=>$property->getFirstMediaUrl(),
                 ],
             );
 
@@ -103,6 +107,10 @@ class PropertyController extends Controller
         $property->user_id = Auth::id();
         $property->status = PropertyStatuses::PENDING;
         $property->save();
+        if($request->hasFile('avatar')){
+            $property->addMedia($request->file('avatar'))->toMediaCollection();
+        }
+
 
         return redirect()->route('admin.properties.index')->with('success', __('Property created successfully'));
     }
@@ -129,6 +137,12 @@ class PropertyController extends Controller
     {
         $property->fill($request->validated());
         $property->save();
+
+        if($request->hasFile('avatar')){
+            $property->clearMediaCollection();
+            $property->addMedia($request->file('avatar'))->toMediaCollection();
+        }
+
 
         return redirect()->route('admin.properties.index')->with('success', __('Property updated successfully'));
     }

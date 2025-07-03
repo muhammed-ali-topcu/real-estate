@@ -50,6 +50,7 @@ class PropertySeeder extends Seeder
             $property->save();
         } catch (\Exception $exception) {
 
+
         }
 
     }

@@ -54,6 +54,7 @@ export default {
                 country_id: null,
                 city_id: null,
                 district_id: null,
+                avatar: null
             })
         };
     },
@@ -150,13 +151,11 @@ export default {
                 </div>
 
 
-                
+
                 <div class="my-4">
                     <Address @update:country-id="value => form.country_id = value"
                         @update:city-id="value => form.city_id = value"
-                        @update:district-id="value => form.district_id = value" 
-                        :errors="form.errors"
-                         />
+                        @update:district-id="value => form.district_id = value" :errors="form.errors" />
                 </div>
 
 
@@ -175,6 +174,30 @@ export default {
                     <InputError class="" :message="form.errors.description" />
                 </div>
 
+
+                <div class="my-4">
+                    <Label for="avatar">{{ $t('Avatar') }}</Label>
+                    <Input
+                        id="avatar"
+                        type="file"
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        @change="form.avatar = $event.target.files[0]"
+                        accept="image/*"
+                    />
+                    <InputError class="mt-2" :message="form.errors.avatar" />
+                    <div v-if="form.progress" class="mt-2">
+                        <progress
+                            :value="form.progress.percentage"
+                            max="100"
+                            class="w-full h-2 rounded bg-gray-200"
+                        ></progress>
+                        <span class="text-xs text-gray-600 ml-2">{{ form.progress.percentage }}%</span>
+                    </div>
+                </div>
+
+                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                    {{ form.progress.percentage }}%
+                </progress>
                 <div class="flex justify-end space-x-3 pt-4">
                     <Button type="button" variant="outline" @click="$inertia.visit(route('admin.properties.index'))"
                         :disabled="form.processing" class="rounded bg-gray-400 px-2 py-1">

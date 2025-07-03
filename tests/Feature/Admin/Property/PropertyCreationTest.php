@@ -9,6 +9,7 @@ use App\Enums\PropertyTypes;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\District;
+use Illuminate\Http\UploadedFile;
 
 test('admin can create a property', function () {
     // Create necessary related models
@@ -35,6 +36,14 @@ test('admin can create a property', function () {
         'city_id' => $city->id,
         'district_id' => $district->id,
     ];
+
+    // Add a mock file upload
+    $payload['avatar'] = UploadedFile::fake()->image('property.jpg');
+
+    $response = setubAdmin()
+        ->post(route('admin.properties.store'), $payload, [
+            'Content-Type' => 'multipart/form-data'
+        ]);
 
     $response = setubAdmin()
         ->post(route('admin.properties.store'), $payload);

@@ -26,6 +26,7 @@ class PropertyUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -39,6 +40,7 @@ class PropertyUpdateRequest extends FormRequest
             'country_id' => ['required', Rule::exists('countries', 'id')],
             'city_id' => ['required', Rule::exists('cities', 'id')->where('country_id', $this->country_id)],
             'district_id' => ['required', Rule::exists('districts', 'id')->where('city_id', $this->city_id)],
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }
