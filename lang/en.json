@@ -12,5 +12,10 @@
     "Property Details": "Property Details",
     "Location": "Location",
     "Description": "Description",
-    "View of the property image": "View of the property image"
+    "View of the property image": "View of the property image",
+    "app.name": "Real Estate",
+    "Login": "Login",
+    "Register": "Register",
+    "Github Repo": "Github Repo",
+    "Documentation": "Documentation"
 }
