@@ -43,8 +43,23 @@ class PropertyController extends Controller
 
     public function show(Property $property)
     {
+        $property->load(['media', 'country', 'city', 'district']);
+
         return Inertia::render('properties/Show', [
-            'property' => $property->load('media'),
+            'property' => [
+                'id' => $property->id,
+                'title' => $property->title,
+                'price' => $property->price,
+                'property_type' => $property->property_type,
+                'listing_type' => $property->listing_type,
+                'rooms' => $property->rooms,
+                'country' => $property->country,
+                'city' => $property->city,
+                'district' => $property->district,
+                'description' => $property->description,
+                'images' => $property->getMedia('images')->map(fn($image) => $image->getUrl()),
+                'first_image_url' => $property->getFirstMediaUrl('images') ?? null,
+            ],
         ]);
     }
 }
