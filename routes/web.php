@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PropertyController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -11,6 +12,10 @@ Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
-require __DIR__.'/admin.php';
+Route::get('properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
+
+Route::get('properties', [PropertyController::class, 'index'])->name('properties.index');
+
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';

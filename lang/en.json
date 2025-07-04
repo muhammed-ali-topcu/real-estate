@@ -3,5 +3,10 @@
     "Users": "Users",
     "user": "User",
     "admin": "Admin",
-    "Properties": "Properties"
+    "Properties": "Properties",
+    "Price": "Price",
+    "Type": "Type",
+    "Listing Type": "Listing Type",
+    "Rooms": "Rooms",
+    "View Details": "View Details"
 }

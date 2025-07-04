@@ -103,11 +103,10 @@ class Property extends Model implements HasMedia
         'longitude',
         'status',
         'featured',
-        'year_built', ];
-
-    protected $casts = [
-
+        'year_built',
     ];
+
+    protected $casts = [];
 
     protected $dates = [
         'approved_at',
@@ -140,6 +139,8 @@ class Property extends Model implements HasMedia
     {
         return $this->belongsTo(Country::class);
     }
-
-    
+    public function scopeApproved($query)
+    {
+        return $query->where('approved_at', '!=', null);
+    }
 }
