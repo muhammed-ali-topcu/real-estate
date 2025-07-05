@@ -4,6 +4,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import Pagination from '@/components/Pagination.vue';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import PublicLayout from '@/layouts/PublicLayout.vue';
 
 export default {
     components: {
@@ -15,7 +16,8 @@ export default {
         CardDescription,
         CardFooter,
         CardHeader,
-        CardTitle
+        CardTitle,
+        PublicLayout
     },
     props: {
         properties: {
@@ -33,7 +35,7 @@ export default {
 
 
 <template>
-    <AppLayout :breadcrumbs="[]">
+    <AppLayout>
         <div class="space-y-4">
             <h1>{{ $t('Properties') }}</h1>
             <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
