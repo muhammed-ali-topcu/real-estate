@@ -16,6 +16,11 @@ class PropertyController extends Controller
             ->with('country')
             ->with('city')
             ->with('district')
+
+            ->when(request('keyword'), function ($query, $keyword) {
+                $keyword = strtolower($keyword);
+                $query->whereRaw('LOWER(title) LIKE ?', ["%{$keyword}%"]);
+            })
             ->latest()
             ->paginate(10)
             ->withQueryString()
@@ -38,6 +43,7 @@ class PropertyController extends Controller
 
         return Inertia::render('properties/Index', [
             'properties' => $properties,
+            'filters' => request()->only(['keyword']),
         ]);
     }
 

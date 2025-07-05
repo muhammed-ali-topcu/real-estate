@@ -20,7 +20,7 @@ class PropertySeeder extends Seeder
             })->with('cities.districts')->first();
 
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $city = $country->cities()->whereHas('districts')->inRandomOrder()->first();
             $district = $city->districts()->inRandomOrder()->first();
             $property = Property::factory()->make([
@@ -42,7 +42,7 @@ class PropertySeeder extends Seeder
             ]);
             $property->save();
         }
-        for ($i = 10; $i < 10; $i++) {
+        for ($i = 10; $i < 100; $i++) {
             $city = $country->cities()->whereHas('districts')->inRandomOrder()->first();
             $district = $city->districts()->inRandomOrder()->first();
             $property = Property::factory()->approved()->make([
