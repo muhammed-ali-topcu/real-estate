@@ -21,6 +21,7 @@ import { Link, usePage } from '@inertiajs/vue3';
 import { trans } from 'laravel-vue-i18n';
 import { BookOpen, Folder, LayoutGrid, LogIn, Menu, Search, LogInIcon, Users, Home, UserPlus } from 'lucide-vue-next';
 import { computed, onMounted } from 'vue';
+import AppearanceTabs from './AppearanceTabs.vue';
 
 
 interface Props {
@@ -202,7 +203,7 @@ const rightNavItems: NavItem[] = [
                             </template>
                         </div>
                     </div>
-
+                    <AppearanceTabs />
                     <DropdownMenu v-if="auth.user">
                         <DropdownMenuTrigger :as-child="true">
                             <Button variant="ghost" size="icon"
