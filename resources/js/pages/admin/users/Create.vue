@@ -2,14 +2,14 @@
 import InputError from '@/components/InputError.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
+import AdminLayout from '@/pages/admin/layouts/AdminLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Select } from '@/components/ui/select/index.js';
 
 export default {
     components: {
         Select,
-        AppLayout,
+        AdminLayout,
         Head,
         InputError,
         Input,
@@ -48,7 +48,7 @@ export default {
 <template>
     <Head :title="$t('Add user')" />
 
-    <AppLayout>
+    <AdminLayout>
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 gap-96">
             <form @submit.prevent="submit">
 
@@ -100,5 +100,5 @@ export default {
                 <button type="submit" class="m-2 rounded bg-blue-400 px-2">{{ $t('Save') }}</button>
             </form>
         </div>
-    </AppLayout>
+    </AdminLayout>
 </template>

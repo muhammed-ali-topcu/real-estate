@@ -2,14 +2,12 @@
 import InputError from '@/components/InputError.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Select } from '@/components/ui/select/index.js';
 import axios from 'axios';
 export default {
     components: {
         Select,
-        AppLayout,
         Head,
         InputError,
         Input,

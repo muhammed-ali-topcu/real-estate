@@ -2,6 +2,7 @@
 
 use App\Enums\PermissionsEnum;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PropertyController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PropertyImageController;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:' . \App\Enums\RolesEnum::ADMIN->value])->group(function () {
 
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     // users
     Route::get('users', [UserController::class, 'index'])->name('users.index')->can(PermissionsEnum::LIST_USERS->value);
     Route::get('users/create', [UserController::class, 'create'])->name('users.create')->can(PermissionsEnum::CREATE_USERS->value);
@@ -34,5 +36,5 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'role:' 
     Route::get('address/districts/{city}', [AddressController::class, 'getDistricts'])->name('address.districts');
 });
 
-Route::middleware(['auth', 'verified', 'role:' . \App\Enums\RolesEnum::ADMIN->value])->group(function () {});
+Route::middleware(['auth', 'verified', 'role:' . \App\Enums\RolesEnum::ADMIN->value])->group(function () { });
 Route::impersonate();

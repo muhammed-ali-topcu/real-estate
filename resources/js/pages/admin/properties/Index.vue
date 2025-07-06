@@ -1,13 +1,13 @@
 <script>
 import Pagination from '@/components/Pagination.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
+import AdminLayout from '@/pages/admin/layouts/AdminLayout.vue';
 import { Link, router } from '@inertiajs/vue3';
 import { wTrans } from 'laravel-vue-i18n';
 
 export default {
     components: {
         Pagination,
-        AppLayout,
+        AdminLayout,
         Link,
     },
 
@@ -79,7 +79,7 @@ export default {
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs">
+    <AdminLayout :breadcrumbs="breadcrumbs">
         <div class="flex items-center justify-between">
             <h1 class="text-3xl font-bold">{{ $t('Properties') }}</h1>
             <Link :href="route('admin.properties.create')" class="rounded p-2 bg-blue-500 "> {{ $t('Create property') }}
@@ -188,5 +188,5 @@ export default {
             </tbody>
         </table>
         <Pagination :links="properties.links" />
-    </AppLayout>
+    </AdminLayout>
 </template>

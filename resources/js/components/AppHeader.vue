@@ -55,18 +55,6 @@ const mainNavItems: NavItem[] = [
         visible: auth.value?.user !== null
     },
     {
-        title: trans('Users'),
-        href: route('admin.users.index'),
-        icon: Users,
-        visible: auth.value?.user ? page.props.can.list_users ?? false : false,
-    },
-    {
-        title: trans('Properties Manager'),
-        href: route('admin.properties.index'),
-        icon: Home,
-        visible: auth.value?.user ? page.props.can.list_properties ?? false : false,
-    },
-    {
         title: trans('Properties'),
         href: route('properties.index'),
         icon: Home,

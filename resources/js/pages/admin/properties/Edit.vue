@@ -2,7 +2,7 @@
 import InputError from '@/components/InputError.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
+import AdminLayout from '@/pages/admin/layouts/AdminLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Select } from '@/components/ui/select/index.js';
 import Address from '@/pages/admin/properties/Addres.vue';
@@ -12,7 +12,7 @@ import PropertyImages from '@/components/PropertyImages.vue';
 export default {
     components: {
         Select,
-        AppLayout,
+        AdminLayout,
         Head,
         InputError,
         Input,
@@ -87,7 +87,7 @@ export default {
 
     <Head :title="$t('Edit property')" />
 
-    <AppLayout>
+    <AdminLayout>
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
 
             <h1 class="text-xl font-semibold leading-tight tracking-tight text-gray-900 dark:text-white">
@@ -220,5 +220,5 @@ export default {
                 </TabsContent>
             </Tabs>
         </div>
-    </AppLayout>
+    </AdminLayout>
 </template>

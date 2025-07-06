@@ -4,13 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox/index.js';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AppLayout from '@/layouts/AppLayout.vue';
+import AdminLayout from '@/pages/admin/layouts/AdminLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
 export default {
     components: {
         Checkbox,
-        AppLayout,
+        AdminLayout,
         Head,
         Button,
         InputError,
@@ -44,7 +44,7 @@ export default {
 </script>
 
 <template>
-    <AppLayout>
+    <AdminLayout>
         <Head :title="$t('Edit user')" />
 
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
@@ -140,5 +140,5 @@ export default {
                 </form>
             </div>
         </div>
-    </AppLayout>
+    </AdminLayout>
 </template>

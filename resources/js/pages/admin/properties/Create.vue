@@ -2,7 +2,7 @@
 import InputError from '@/components/InputError.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
-import AppLayout from '@/layouts/AppLayout.vue';
+import AdminLayout from '@/pages/admin/layouts/AdminLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Select } from '@/components/ui/select/index.js';
 import Address from '@/pages/admin/properties/Addres.vue';
@@ -10,12 +10,12 @@ import Address from '@/pages/admin/properties/Addres.vue';
 export default {
     components: {
         Select,
-        AppLayout,
         Head,
         InputError,
         Input,
         Label,
         Address,
+        AdminLayout
     },
     props: {
         propertyTypes: {
@@ -73,7 +73,7 @@ export default {
 
     <Head :title="$t('Add property')" />
 
-    <AppLayout>
+    <AdminLayout>
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 gap-96">
             <form @submit.prevent="submit">
 
@@ -190,5 +190,5 @@ export default {
 
             </form>
         </div>
-    </AppLayout>
+    </AdminLayout>
 </template>
