@@ -2,8 +2,6 @@
 import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { trans } from 'laravel-vue-i18n';
-import { LayoutGrid } from 'lucide-vue-next';
 
 defineProps<{
     items: NavItem[];
