@@ -2,7 +2,7 @@
 import InputError from '@/components/InputError.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
-import AdminLayout from '@/pages/admin/layouts/AdminLayout.vue';
+import AdminLayout from '@/layouts/admin/AdminLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Select } from '@/components/ui/select/index.js';
 import Address from '@/pages/admin/properties/Addres.vue';

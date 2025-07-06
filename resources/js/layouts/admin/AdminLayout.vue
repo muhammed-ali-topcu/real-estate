@@ -2,7 +2,7 @@
 import type { BreadcrumbItemType } from '@/types';
 import FlashMessages from '@/components/FlashMessages.vue';
 import AppShell from '@/components/AppShell.vue';
-import AdminSidebar from '@/pages/admin/layouts/AdminSidebar.vue';
+import AdminSidebar from '@/layouts/admin/AdminSidebar.vue';
 import AppSidebarHeader from '@/components/AppSidebarHeader.vue';
 import AppContent from '@/components/AppContent.vue';
 

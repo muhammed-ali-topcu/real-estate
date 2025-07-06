@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox/index.js';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AdminLayout from '@/pages/admin/layouts/AdminLayout.vue';
+import AdminLayout from '@/layouts/admin/AdminLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
 export default {

@@ -1,6 +1,6 @@
 <script>
 import Pagination from '@/components/Pagination.vue';
-import AdminLayout from '@/pages/admin/layouts/AdminLayout.vue';
+import AdminLayout from '@/layouts/admin/AdminLayout.vue';
 import { Link, router } from '@inertiajs/vue3';
 import { wTrans } from 'laravel-vue-i18n';
 
