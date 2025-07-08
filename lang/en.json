@@ -1,0 +1,21 @@
+{
+    "Dashboard": "Dashboard",
+    "Users": "Users",
+    "user": "User",
+    "admin": "Admin",
+    "Properties": "Properties",
+    "Price": "Price",
+    "Type": "Type",
+    "Listing Type": "Listing Type",
+    "Rooms": "Rooms",
+    "View Details": "View Details",
+    "Property Details": "Property Details",
+    "Location": "Location",
+    "Description": "Description",
+    "View of the property image": "View of the property image",
+    "app.name": "Real Estate",
+    "Login": "Login",
+    "Register": "Register",
+    "Github Repo": "Github Repo",
+    "Documentation": "Documentation"
+}

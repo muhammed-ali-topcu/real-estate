@@ -1,5 +1,11 @@
 <?php
 
+use App\Enums\RolesEnum;
+use App\Models\User;
+use Database\Seeders\RolesSeeder;
+
+use function Pest\Laravel\seed;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -44,4 +50,13 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function setubAdmin()
+{
+    seed(RolesSeeder::class);
+    $admin = User::factory()->create();
+    $admin->assignRole(RolesEnum::ADMIN->value);
+
+    return test()->actingAs($admin);
 }

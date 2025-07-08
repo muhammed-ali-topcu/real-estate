@@ -1,0 +1,194 @@
+<script>
+import InputError from '@/components/InputError.vue';
+import Input from '@/components/ui/input/Input.vue';
+import Label from '@/components/ui/label/Label.vue';
+import AdminLayout from '@/layouts/admin/AdminLayout.vue';
+import { Head } from '@inertiajs/vue3';
+import { Select } from '@/components/ui/select/index.js';
+import Address from '@/pages/admin/properties/Addres.vue';
+
+export default {
+    components: {
+        Select,
+        Head,
+        InputError,
+        Input,
+        Label,
+        Address,
+        AdminLayout
+    },
+    props: {
+        propertyTypes: {
+            type: Array,
+            required: true,
+        },
+        listingTypes: {
+            type: Array,
+            required: true,
+        },
+        statuses: {
+            type: Array,
+            required: true,
+        },
+        rooms: {
+            type: Array,
+            required: true,
+        },
+    },
+
+    data() {
+        return {
+            form: this.$inertia.form({
+                title: '',
+                description: '',
+                price: '',
+                status: '',
+                property_type: null,
+                listing_type: null,
+                rooms: null,
+                admin_notes: '',
+                approved_at: '',
+                approved_by: '',
+                area: '',
+                address: '',
+                country_id: null,
+                city_id: null,
+                district_id: null,
+            })
+        };
+    },
+    methods: {
+        submit() {
+            this.form.post(route('admin.properties.store'), {
+                preserveScroll: true
+            });
+        }
+    },
+
+
+};
+</script>
+
+<template>
+
+    <Head :title="$t('Add property')" />
+
+    <AdminLayout>
+        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 gap-96">
+            <form @submit.prevent="submit">
+
+                <h1 class="text-xl font-semibold leading-tight tracking-tight text-gray-900 dark:text-white">
+                    {{ $t('Add property') }}
+                </h1>
+                <div class="grid ">
+                    <Label for="title">{{ $t('Title') }}</Label>
+                    <Input id="title" class="mt-1 block w-full" v-model="form.title" required
+                        :placeholder="$t('Title')" />
+                    <InputError class="mt-2" :message="form.errors.title" />
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="my-4">
+                        <Label for="property_type">{{ $t('Property Type') }}</Label>
+                        <select id="property_type" class="mt-1 block w-full rounded border p-1"
+                            v-model="form.property_type">
+                            <option :value="null" disabled selected>{{ $t('Select Property Type') }}</option>
+                            <option v-for="property_type in propertyTypes" :value="property_type">
+                                {{ $t(property_type) }}
+                            </option>
+                        </select>
+                        <InputError class="mt-2" :message="form.errors.property_type" />
+                    </div>
+
+                    <div class="my-4">
+                        <Label for="listing_type">{{ $t('Listing Type') }}</Label>
+                        <select id="listing_type" class="mt-1 block w-full rounded border p-1"
+                            v-model="form.listing_type">
+                            <option :value="null" disabled selected>{{ $t('Select Listing Type') }}</option>
+                            <option v-for="listing_type in listingTypes" :value="listing_type">
+                                {{ $t(listing_type) }}
+                            </option>
+                        </select>
+                        <InputError class="mt-2" :message="form.errors.listing_type" />
+                    </div>
+
+                    <div class="my-4">
+                        <Label for="rooms">{{ $t('Rooms') }}</Label>
+                        <select id="rooms" class="mt-1 block w-full rounded border p-1" v-model="form.rooms">
+                            <option :value="null" disabled selected>{{ $t('Select Rooms') }}</option>
+                            <option v-for="room in rooms" :value="room">
+                                {{ $t(room) }}
+                            </option>
+                        </select>
+                        <InputError class="mt-2" :message="form.errors.rooms" />
+                    </div>
+
+
+                    <div class="my-4">
+                        <Label for="status">{{ $t('Status') }}</Label>
+                        <select id="status" class="mt-1 block w-full rounded border p-1" v-model="form.status">
+                            <option :value="null" disabled selected>{{ $t('Select Status') }}</option>
+                            <option v-for="status in statuses" :value="status">
+                                {{ $t(status) }}
+                            </option>
+                        </select>
+                        <InputError class="mt-2" :message="form.errors.status" />
+                    </div>
+
+                    <div class="my-4">
+                        <Label for="price">{{ $t('Price') }}</Label>
+                        <Input id="price" class="mt-1 block w-full" v-model="form.price" required
+                            :placeholder="$t('Price')" type="number" />
+                        <InputError class="mt-2" :message="form.errors.price" />
+                    </div>
+
+                    <div class="my-4">
+                        <Label for="area">{{ $t('Area in square meters') }}</Label>
+                        <Input id="area" class="mt-1 block w-full" v-model="form.area" required
+                            :placeholder="$t('Area in square meters')" type="number" />
+                        <InputError class="mt-2" :message="form.errors.area" />
+                    </div>
+                </div>
+
+
+
+                <div class="my-4">
+                    <Address @update:country-id="value => form.country_id = value"
+                        @update:city-id="value => form.city_id = value"
+                        @update:district-id="value => form.district_id = value" :errors="form.errors" />
+                </div>
+
+
+                <div class="grid my-4">
+                    <Label for="address">{{ $t('Address') }}</Label>
+                    <textarea class="mt-2 block w-full  p-2 rounded border " id="address" v-model="form.address"
+                        :placeholder="$t('Address')" rows="5"></textarea>
+                    <InputError class="" :message="form.errors.address" />
+                </div>
+
+
+                <div class="grid my-4">
+                    <Label for="description">{{ $t('Description') }}</Label>
+                    <textarea class="mt-2 block w-full rounded p-2 border " id="description" v-model="form.description"
+                        :placeholder="$t('Description')" rows="5"></textarea>
+                    <InputError class="" :message="form.errors.description" />
+                </div>
+
+
+                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                    {{ form.progress.percentage }}%
+                </progress>
+                <div class="flex justify-end space-x-3 pt-4">
+                    <Button type="button" variant="outline" @click="$inertia.visit(route('admin.properties.index'))"
+                        :disabled="form.processing" class="rounded bg-gray-400 px-2 py-1">
+                        {{ $t('Cancel') }}
+                    </Button>
+                    <Button type="submit" :disabled="form.processing" class="rounded bg-blue-400 px-2 py-1">
+                        <span v-if="form.processing">{{ $t('Saving') }}...</span>
+                        <span v-else>{{ $t('Save') }}</span>
+                    </Button>
+                </div>
+
+            </form>
+        </div>
+    </AdminLayout>
+</template>

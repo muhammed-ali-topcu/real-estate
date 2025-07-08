@@ -2,31 +2,63 @@
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
+import NavGuest from '@/components/NavGuest.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { type NavItem, type SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/vue3';
+import { trans } from 'laravel-vue-i18n';
+import { BookOpen, Folder, Home, LayoutGrid,Users } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
+import { computed } from 'vue';
+
+
+const page = usePage<SharedData>();
+const auth = computed(() => page.props.auth);
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
-        href: '/dashboard',
+        title: trans('Dashboard'),
+        href: route('dashboard'),
         icon: LayoutGrid,
+        visible: auth.value?.user !== null
     },
+    {
+        title: trans('Users'),
+        href: route('admin.users.index'),
+        icon: Users,
+        visible: auth.value?.user ? page.props.can.list_users ?? false : false,
+    },
+    {
+        title: trans('Properties Manager'),
+        href: route('admin.properties.index'),
+        icon: Home,
+        visible: auth.value?.user ? page.props.can.list_properties ?? false : false,
+    },
+    {
+        title: trans('Properties'),
+        href: route('properties.index'),
+        icon: Home,
+        visible: true,
+    },
+
+
 ];
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Github Repo',
+        title: trans('Github Repo'),
         href: 'https://github.com/laravel/vue-starter-kit',
         icon: Folder,
+        visible: false,
     },
     {
-        title: 'Documentation',
+        title: trans('Documentation'),
         href: 'https://laravel.com/docs/starter-kits#vue',
         icon: BookOpen,
+        visible:false,
     },
+
+
 ];
 </script>
 
@@ -38,6 +70,7 @@ const footerNavItems: NavItem[] = [
                     <SidebarMenuButton size="lg" as-child>
                         <Link :href="route('dashboard')">
                             <AppLogo />
+                            <h3>{{ trans('app.name') }}</h3>
                         </Link>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -50,7 +83,8 @@ const footerNavItems: NavItem[] = [
 
         <SidebarFooter>
             <NavFooter :items="footerNavItems" />
-            <NavUser />
+            <NavUser v-if="auth.user" />
+            <NavGuest v-else />
         </SidebarFooter>
     </Sidebar>
     <slot />
