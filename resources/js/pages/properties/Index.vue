@@ -1,6 +1,6 @@
 <script>
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Link, router } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import Pagination from '@/components/Pagination.vue';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import PublicLayout from '@/layouts/PublicLayout.vue';
@@ -19,7 +19,8 @@ export default {
         CardTitle,
         PublicLayout,
         X,
-        SearchIcon
+        SearchIcon,
+        Head
     },
     props: {
         properties: {
@@ -55,7 +56,9 @@ export default {
 
 
 <template>
+    <Head :title="$t('Properties')" />
     <AppLayout>
+        <h1>f jdlskjfdkl</h1>
         <div class="space-y-4">
             <div class="text-center mb-8">
                 <h1 class="text-2xl font-bold mb-4">{{ $t('Properties') }}</h1>

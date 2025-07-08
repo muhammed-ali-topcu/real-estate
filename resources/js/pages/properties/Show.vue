@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/layouts/AppLayout.vue';
+import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import {
     Dialog,
@@ -26,6 +27,7 @@ function openImage(imageUrl) {
 </script>
 
 <template>
+    <Head :title="property.title" />
     <AppLayout :breadcrumbs="[]">
         <div class="max-w-4xl mx-auto py-8">
             <h1 class="text-3xl font-bold mb-4">{{ property.title }}</h1>
